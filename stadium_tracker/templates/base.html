@@ -1,0 +1,69 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Games Seen</title>
+    <link href="//cdn.muicss.com/mui-0.9.40/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+    <script src="//cdn.muicss.com/mui-0.9.40/js/mui.min.js"></script>
+  </head>
+  <body>
+    <header class="mui-appbar mui--z1">
+      <div class="mui-container">
+        <table>
+          <tr class="mui--appbar-height">
+            <td class="mui--text-title"><a id="pageTitle" href="{% url "stadium_tracker:gamesseen_list" %}">Games Seen</a></td>
+            <td class="mui--text-right">
+              <ul class="mui-list--inline mui--text-body2">
+                  {% if request.user.is_authenticated %}
+                      <li><a href="#">Welcome
+                          {% filter title %}
+                          {{ request.user }}
+                          {% endfilter %}
+                      </a></li>
+                  {% endif %}
+                <li><a href="#">About</a></li>
+                  {% if request.user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                  {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                  {% endif %}
+              </ul>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+    </header>
+
+    <div id="content-wrapper">
+
+      <div class="mui--appbar-height"></div>
+
+      <div class="mui-container">
+        <br><br>
+
+        <div id="messages">
+          {% for message in messages %}
+            <p style="color: {% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% endif %}">
+              {% if 'safe' in message.tags %}{{ message|safe }}{% else %}{{ message }}{% endif %}
+            </p>
+          {% endfor %}
+        </div>
+
+        {% block content %}{% endblock %}
+      </div>
+
+    </div><!-- end content-wrapper -->
+
+    <footer>
+      <div class="mui-container mui--text-center">
+        Made with ♥ by <a href="https://www.muicss.com">MUICSS</a>
+      </div>
+    </footer>
+
+  </body>
+</html>

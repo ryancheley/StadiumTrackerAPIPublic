@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+  <div class="mui-panel">
+    <div class="mui-container">
+        <blockquote>{{ game.game_id }}</blockquote>
+        <cite>- {{ game.user }}</cite>
+    </div>
+  </div>
+
+  <div class="mui-container">
+    <a class="mui-btn mui-btn--raised" href="{% url "stadium_tracker:gamesseen_list" %}">Go Back</a>
+  </div>
+
+{% endblock %}
