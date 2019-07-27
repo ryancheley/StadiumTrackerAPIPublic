@@ -1,8 +1,9 @@
 from rest_framework import generics
-from .serializers import GamesSeenSerializer
+from .serializers import GamesSeenSerializer, UsersSerializer
 from .permissions import IsOwnerOrReadOnly
 
 from stadium_tracker.models import GamesSeen
+from users.models import CustomUser
 
 
 class GamesSeenList(generics.ListCreateAPIView):
@@ -31,3 +32,8 @@ class GamesSeenDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsOwnerOrReadOnly, )
     queryset = GamesSeen.objects.all()
     serializer_class = GamesSeenSerializer
+
+
+class UserList(generics.ListCreateAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UsersSerializer
