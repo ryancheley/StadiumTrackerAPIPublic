@@ -159,11 +159,11 @@ ACCOUNT_ACTIVATION_DAYS = 7
 LOGOUT_REDIRECT_URL = 'stadium_tracker:gamesseen_list'
 LOGIN_REDIRECT_URL = 'stadium_tracker:gamesseen_list'
 
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']
-# EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']
+EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (

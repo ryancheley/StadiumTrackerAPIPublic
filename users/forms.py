@@ -1,11 +1,13 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserChangeForm
+from django_registration.forms import RegistrationForm
 from .models import CustomUser
 
+# Note: Must keep email in order to be able to use the django-registration module
 
-class CustomUserCreationForm(UserCreationForm):
+class CustomUserCreationForm(RegistrationForm):
 
-    class Meta(UserCreationForm):
+    class Meta(RegistrationForm.Meta):
         model = CustomUser
         fields = ('username', 'email')
 
