@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>Search for Game</h1>
+
+    <form id="tfnewsearch" method="get" action="/search">
+        <select name="team1">
+            {% for t in teams %}
+                <option value="{{ t.id }}">{{ t.name }}</option>
+            {% endfor %}
+        </select>
+        <br/>
+        <select name="team2">
+            {% for t in teams %}
+                <option value="{{ t.id }}">{{ t.name }}</option>
+            {% endfor %}
+        </select>
+        <br/>
+        <input type="date" class="tftextinput" name="start_date" size="25" placeholder="yyyy-mm-dd">
+        <br/>
+        <input type="date" class="tftextinput" name="end_date" size="25" placeholder="yyyy-mm-dd">
+        <br/>
+        <input type="submit" value="search" class="tfbutton">
+    </form>
+
+    <ul>
+    {% for g in games%}
+        <li>{{ g.text }} - {{ g.gamePk }}</li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}

@@ -6,4 +6,4 @@ from .models import GamesSeen
 class GameSeenForm(ModelForm):
     class Meta:
         model = GamesSeen
-        fields = ['game_id', ]
+        fields = ['game_id',]

@@ -3,7 +3,6 @@ from .serializers import GamesSeenSerializer, UsersSerializer
 from .permissions import IsOwnerOrReadOnly
 
 from stadium_tracker.models import GamesSeen
-from users.models import CustomUser
 
 
 class GamesSeenList(generics.ListCreateAPIView):
@@ -34,6 +33,3 @@ class GamesSeenDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = GamesSeenSerializer
 
 
-class UserList(generics.ListCreateAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = UsersSerializer
