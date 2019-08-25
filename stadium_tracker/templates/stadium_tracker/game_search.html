@@ -2,8 +2,9 @@
 
 {% block content %}
 
-    <h1>Search for Game</h1>
+    {{ test }}
 
+    <h1>Search for Game</h1>
     <form id="tfnewsearch" method="get" action="/search">
         <select name="team1">
             {% for t in teams %}
@@ -17,17 +18,26 @@
             {% endfor %}
         </select>
         <br/>
-        <input type="date" class="tftextinput" name="start_date" size="25" placeholder="yyyy-mm-dd">
+        <input type="date" class="mui-textfield" name="start_date" size="25" placeholder="yyyy-mm-dd">
         <br/>
-        <input type="date" class="tftextinput" name="end_date" size="25" placeholder="yyyy-mm-dd">
+        <input type="date" class="mui-textfield" name="end_date" size="25" placeholder="yyyy-mm-dd">
         <br/>
-        <input type="submit" value="search" class="tfbutton">
+        <input type="submit" value="search" class="mui-btn mui-btn--primary">
     </form>
 
+    {% if games %}
+    <h2>Search Results:</h2>
     <ul>
     {% for g in games%}
-        <li>{{ g.text }} - {{ g.gamePk }}</li>
+        <li>
+            <form action="/search" method="post">{% csrf_token %}
+                <input type="hidden" name="user_id" value="{{user.id}}" />
+                <label for="{{ g.gamePk }}" >{{ g.text }} ({{ g.gamePk }})</label>
+                <button class="mui-btn mui-btn--primary" name="gamePk" value="{{ g.gamePk }}">Add</button>
+            </form>
+        </li>
     {% endfor %}
     </ul>
+    {% endif %}
 
 {% endblock %}

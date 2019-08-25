@@ -1,28 +1,57 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
   <h1 class="mui--text-display1">{% if gamesseen %}Edit{% else %}New{% endif %} Game</h1>
+    <form method="get">
+        <select name="team1">
+            {% for t in teams %}
+                <option value="{{ t.id }}">{{ t.name }}</option>
+            {% endfor %}
+        </select>
+        <br/>
+        <select name="team2">
+            {% for t in teams %}
+                <option value="{{ t.id }}">{{ t.name }}</option>
+            {% endfor %}
+        </select>
+        <br/>
+        <input type="date" class="mui-textfield" name="start_date" size="25" placeholder="yyyy-mm-dd">
+        <br/>
+        <input type="date" class="mui-textfield" name="end_date" size="25" placeholder="yyyy-mm-dd">
+        <br/>
+        <input type="submit" value="search" class="mui-btn mui-btn--primary">
+    </form>
 
+
+{%  if games %}
+    <ul>
+    {% for g in games %}
   <form method="post">
     {% csrf_token %}
 
-
     {% for field in form %}
-      <td>
+      <li>
         <div class="mui-textfield">
             {{ field.errors }}
-            <p>{{ field.label_tag }}</p>
+            <p>
+            {{ g.text }}
             {{ field }}
+                {{ field.id }}
+            <input class="mui-btn mui-btn--primary" type="submit" value="{% if gamesseen %}Edit{% else %}Add{% endif %}" />
+            </p>
             {% if field.help_text %}
               <p class="help">{{ field.help_text|safe }}</p>
             {% endif %}
         </div>
-      </td>
+      </li>
     {% endfor %}
 
-    <input class="mui-btn mui-btn--primary" type="submit" value="{% if gamesseen %}Edit{% else %}New{% endif %}" />
+    </form>
+    {% endfor %}
+    </ul>
     <a class="mui-btn mui-btn--raised" href="{% url "stadium_tracker:gamesseen_list" %}">Go Back</a>
-  </form>
+
+    {% endif %}
+
 
 {% endblock %}
