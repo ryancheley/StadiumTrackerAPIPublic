@@ -1,12 +1,38 @@
 {% extends 'base.html' %}
 {% load humanize %}
+{% load tz %}
 
 {% block content %}
 
+
   <div class="mui-panel">
     <div class="mui-container">
-        <blockquote>{{ game.game_id }}</blockquote>
-        <cite>- {{ game.user }}</cite>
+    <h1>
+        {{ game_details.away.team }} at {{ game_details.home.team }}
+    </h1>
+    <h2>{{ game_details.game_date | timezone:"America/Los_Angeles"}}</h2>
+      <table>
+          <tr>
+              <th>Team</th>
+              <th>Runs</th>
+              <th>Hits</th>
+              <th>Errors</th>
+          </tr>
+          <tr>
+              <td>{{ game_details.away.team }}</td>
+              <td>{{ game_details.away.runs }}</td>
+              <td>{{ game_details.away.hits }}</td>
+              <td>{{ game_details.away.errors }}</td>
+          </tr>
+          <tr>
+              <td>{{ game_details.home.team }}</td>
+              <td>{{ game_details.home.runs }}</td>
+              <td>{{ game_details.home.hits }}</td>
+              <td>{{ game_details.home.errors }}</td>
+          </tr>
+      </table>
+            <h3>  {{ game_details.headline }} </h3>
+        <p>{{ game_details.body | safe }}</p>
     </div>
   </div>
 

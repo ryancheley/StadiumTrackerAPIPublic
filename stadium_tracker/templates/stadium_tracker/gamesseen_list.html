@@ -1,42 +1,48 @@
 {% extends 'base.html' %}
-{% load humanize %}
 
 {% block content %}
 
-  <table class="mui-table mui-table--bordered">
+
+<table class="mui-table mui-table--bordered">
     <thead>
         <tr>
-          <th>Game</th>
-          <th>User</th>
-          <th>Created</th>
-          <th>Modified</th>
+            <th>Game</th>
+            <th>User</th>
             <th colspan="2">
-            {% if gamesseen_list.game.user == request.user %}
-            Edit
-            {% endif %}
-        </th>
+                &nbsp;
+            </th>
         </tr>
+
     </thead>
     <tbody>
-        <!-- for class based views rename this queryset to quote_list -->
-        {% for game in gamesseen_list %}
-        <tr>
-          <td><a href="{% url "stadium_tracker:gamesseen_detail" game.id %}">{{ game.game_id }}</a></td>
-          <td>{{ game.user }}</td>
-          <td>{{ game.create_date|timesince }} ago</td>
-          <td>{{ game.modify_date|timesince }} ago</td>
-            {% if request.user == game.user %}
-            <td><a class="mui-bDeleted mui-btn--small mui-btn--flat mui-btn--primary" href="{% url "stadium_tracker:gamesseen_edit" game.id %}">Edit</a></td>
-            <td><a class="mui-btn mui-btn--small mui-btn--flat mui-btn--danger" href="{% url "stadium_tracker:gamesseen_delete" game.id %}">Delete</a></td>
-        {% else %}
-            <td colspan="2"></td>
-        {% endif %}
-        </tr>
-        {% endfor %}
+    {% for g,m in test %}
+    <tr>
+        <td>
+            <a href="{% url "stadium_tracker:gamesseen_detail" m.id %}">
+            {{ g.game_date }}
+            <br>
+            {{ g.away.team }} vs. {{ g.home.team }}
+            <br>
+            Final Score: {{ g.away.runs }} - {{ g.home.runs }}
+            </a>
+    </td>
+    <td>
+        {% filter title%}
+        {{ m.user }}
+        {% endfilter %}
+    </td>
+    {% if request.user == m.user %}
+    <td><a class="mui-btn mui-btn--small mui-btn--flat mui-btn--danger" href="{% url "stadium_tracker:gamesseen_delete" m.id %}">Delete</a></td>
+    {% else %}
+        <td colspan="2"></td>
+    {% endif %}
+
+    </tr>
+    {% endfor %}
     </tbody>
-  </table>
+</table>
+
     <div class="mui-container">
-    {{ test }}
     {% if request.user.is_authenticated %}
         <a class="mui-btn mui-btn--primary" href="{% url "stadium_tracker:gamesseen_new" %}">Add a Game Seen</a>
     {% else %}
