@@ -19,9 +19,7 @@ class GamesSeenListView(ListView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-#        data['game_details'] = GamesSeen.game_details(GamesSeen.game_id)
-#        data['model'] = GamesSeen.objects.all()
-        data['test'] = zip(GamesSeen.game_details(GamesSeen.game_id), GamesSeen.objects.all())
+        data['details'] = zip(GamesSeen.game_details(GamesSeen.game_id), GamesSeen.objects.all())
         return data
 
 
