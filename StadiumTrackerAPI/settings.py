@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     # Local
     'users.apps.UsersConfig',
     'stadium_tracker.apps.StadiumTrackerConfig',
+    'content.apps.ContentConfig',
     'api.apps.ApiConfig',
 ]
 
