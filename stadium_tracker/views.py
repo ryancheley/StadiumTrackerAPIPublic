@@ -32,9 +32,7 @@ class GamesSeenDetailView(DetailView):
         game_details = get_game_details(gamePk)
         context = {
             'game_details': game_details,
-            'test': self.kwargs['pk']
         }
-
         return render(request, 'stadium_tracker/gamesseen_detail.html', context)
 
 
@@ -44,6 +42,7 @@ class GamesSeenCreate(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('stadium_tracker:gamesseen_list')
 
     def get(self, request, *args, **kwargs):
+        # TODO: Clean up this method as it seems really long
         form = GameSeenForm
         sportId = 1
         team1 = request.GET.get('team1')
@@ -104,22 +103,8 @@ class GamesSeenDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         context = {
             'game_details': game_details,
         }
-
         return render(request, 'stadium_tracker/gamesseen_confirm_delete.html', context)
 
     def test_func(self):
         obj = self.get_object()
         return obj.user == self.request.user
-
-
-def get_all_games_seen():
-    url = 'http://127.0.0.1:8000/api/games/'
-    r = requests.get(url)
-    games_seen_display = []
-    games = r.json()
-    for i in range(len(games)):
-        games_seen_display.append({
-            'user_id': games[i].get('user'),
-            'gamePk': games[i].get('game_id'),
-        })
-    return games_seen_display
