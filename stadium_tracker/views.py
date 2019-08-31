@@ -3,7 +3,7 @@ from django.views.generic.edit import DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.shortcuts import render
-from .game_details import get_game_details
+from .game_details import get_game_details, get_teams
 
 import requests
 
@@ -123,12 +123,3 @@ def get_all_games_seen():
             'gamePk': games[i].get('game_id'),
         })
     return games_seen_display
-
-def get_teams():
-    url = 'http://statsapi.mlb.com/api/v1/teams?sportId=1'
-    r = requests.get(url)
-    teams = r.json().get('teams')
-    team_display = []
-    for i in range(len(teams)):
-        team_display.append({'id': teams[i].get('id'), 'name': teams[i].get('name')})
-    return team_display

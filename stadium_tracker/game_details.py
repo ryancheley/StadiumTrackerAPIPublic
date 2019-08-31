@@ -49,3 +49,14 @@ def get_game_details(game_id):
         'game_id': game_id,
     }
     return details
+
+
+def get_teams():
+    url = 'http://statsapi.mlb.com/api/v1/teams?sportId=1'
+    r = requests.get(url)
+    teams = r.json().get('teams')
+    teams = sorted(teams, key = lambda team: (team['name']))
+    team_display = []
+    for i in range(len(teams)):
+        team_display.append({'id': teams[i].get('id'), 'name': teams[i].get('name')})
+    return team_display
