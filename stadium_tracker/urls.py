@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from stadium_tracker import views
 
 app_name = 'stadium_tracker'
 

@@ -3,12 +3,12 @@ from django.views.generic.edit import DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.shortcuts import render
-from .game_details import get_game_details, get_teams
+from stadium_tracker.game_details import get_game_details, get_teams
 
 import requests
 
-from .models import GamesSeen
-from .forms import GameSeenForm
+from stadium_tracker.models import GamesSeen
+from stadium_tracker.forms import GameSeenForm
 
 # Documentation for MLB APIhttp://statsapi-default-elb-prod-876255662.us-east-1.elb.amazonaws.com/docs/
 

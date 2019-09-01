@@ -1,11 +1,10 @@
-
-<header>
-    <title>{{ pages.title }}</title>
-</header>
+{% extends 'base.html' %}
 
 {% block content %}
 
-    <p>Something should go here: {{ pages.page_content }} </p>
+    {{ pages.page_content | safe }}
+    <br>
+    {{ test }}
 
 
 {% endblock %}
