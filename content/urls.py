@@ -6,5 +6,5 @@ app_name = 'stadium_tracker'
 
 urlpatterns = [
     path('', ContentTemplateView.as_view(template_name='page.html'), name='home'),
-    path('<name>', ContentTemplateView.as_view(template_name='page.html')),
+    path('Pages/<name>', ContentTemplateView.as_view(template_name='page.html'), name='<name>'),
 ]

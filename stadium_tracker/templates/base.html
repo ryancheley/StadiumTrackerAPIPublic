@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{pages.title}}</title>
+    <title>{{ pages.title }}</title>
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
     <link href="//cdn.muicss.com/mui-0.9.40/css/mui.min.css" rel="stylesheet" type="text/css" />
     <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
@@ -16,17 +16,18 @@
       <div class="mui-container">
         <table>
           <tr class="mui--appbar-height">
-            <td class="mui--text-title"><a id="pageTitle" href="/">Stadia Tracker</a></td>
+            <td class="mui--text-title"><a id="pageTitle" href="/">StadiaTracker</a></td>
             <td class="mui--text-right">
               <ul class="mui-list--inline mui--text-body2">
+              <li><a href="http://blog.stadiatracker.com">Blog</a></li>
                   {% if request.user.is_authenticated %}
-                      <li><a href="#">Welcome
+                      <li><a href="{% url 'stadium_tracker:gamesseen_list' %}">Welcome
                           {% filter title %}
                           {{ request.user }}
                           {% endfilter %}
                       </a></li>
                   {% endif %}
-                <li><a href="/About">About</a></li>
+                <li><a href="Pages/About">About</a></li>
                   {% if request.user.is_authenticated %}
                 <li><a href="{% url 'logout' %}">Logout</a></li>
                   {% else %}

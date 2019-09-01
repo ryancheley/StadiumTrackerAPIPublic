@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework_swagger.views import get_swagger_view
 
-from .views import GamesSeenList, GamesSeenDetail
+from api.views import GamesSeenList, GamesSeenDetail
 
 schema_view = get_swagger_view(title='Games Seen API')
 
