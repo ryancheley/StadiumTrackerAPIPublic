@@ -27,7 +27,7 @@
 {%  if games %}
     <ul>
     {% for g in games %}
-  <form method="post">
+    <form method="post">
     {% csrf_token %}
 
     {% for field in form %}
@@ -37,7 +37,7 @@
             <p>
             {{ g.text }}
             {{ field }}
-                {{ field.id }}
+                {{ g.gamePk }}
             <input class="mui-btn mui-btn--primary" type="submit" value="{% if gamesseen %}Edit{% else %}Add{% endif %}" />
             </p>
             {% if field.help_text %}

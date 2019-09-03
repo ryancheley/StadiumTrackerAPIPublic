@@ -3,6 +3,7 @@ import requests
 
 
 def get_game_details(game_id):
+    # TODO: Use GameID 8060 as a test for this method as it will return None and break stuff
     """
     :param game_id:
     :return: dictionary of game details which includes the Headline, Blurb, and body of the story

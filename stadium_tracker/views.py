@@ -43,6 +43,7 @@ class GamesSeenCreate(LoginRequiredMixin, CreateView):
 
     def get(self, request, *args, **kwargs):
         # TODO: Clean up this method as it seems really long
+        # TODO: Fix issue with the last game returned being the game ID for all games displayed, look at FormSets
         form = GameSeenForm
         sportId = 1
         team1 = request.GET.get('team1')
@@ -79,7 +80,7 @@ class GamesSeenCreate(LoginRequiredMixin, CreateView):
                     }
                     if (str(home_id) == team1 and str(away_id) == team2) or (str(home_id) == team2 and str(away_id) == team1):
                         display_dates.append(data)
-                    form = GameSeenForm(initial={'game_id' : gamePk})
+                        form = GameSeenForm(initial={'game_id': gamePk})
 
         context = {
             'form': form,
