@@ -5,8 +5,6 @@ from django.urls import reverse_lazy
 from django.shortcuts import render
 from stadium_tracker.game_details import get_game_details, get_teams, get_form_details
 
-import requests
-
 from stadium_tracker.models import GamesSeen
 from stadium_tracker.forms import GameSeenForm
 

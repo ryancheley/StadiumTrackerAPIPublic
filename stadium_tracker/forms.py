@@ -9,4 +9,3 @@ class GameSeenForm(ModelForm):
     class Meta:
         model = GamesSeen
         fields = ['game_id',]
-        # widgets = {'game_id': forms.HiddenInput()}
