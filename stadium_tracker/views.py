@@ -42,7 +42,6 @@ class GamesSeenCreate(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('stadium_tracker:gamesseen_list')
 
     def get(self, request, *args, **kwargs):
-        # TODO: Fix issue with the last game returned being the game ID for all games displayed, look at FormSets
         form = GameSeenForm
         teams = get_teams()
         display_dates = get_form_details(request)
