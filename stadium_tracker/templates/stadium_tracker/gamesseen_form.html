@@ -23,8 +23,7 @@
         <input type="submit" value="search" class="mui-btn mui-btn--primary">
     </form>
 
-
-{%  if games %}
+    {%  if games %}
     <ul>
     {% for g in games %}
     <form method="post">
@@ -36,9 +35,9 @@
             {{ field.errors }}
             <p>
             {{ g.text }}
-            {{ field }}
-                {{ g.gamePk }}
-            <input class="mui-btn mui-btn--primary" type="submit" value="{% if gamesseen %}Edit{% else %}Add{% endif %}" />
+
+            <input class="mui-btn mui-btn--primary" name = "name" type="submit"
+                   value="{{ g.gamePk }}" type="button" />
             </p>
             {% if field.help_text %}
               <p class="help">{{ field.help_text|safe }}</p>
