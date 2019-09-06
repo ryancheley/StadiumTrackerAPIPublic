@@ -5,6 +5,8 @@ import requests
 def get_game_details(game_id):
     # TODO: Use GameID 8060 as a test for this method as it will return None and break stuff
     # TODO: Get Team Names and Final Score from same API endpoint as get_form_details
+    # TODO: Add Type hints
+    # TODO: Add enumerated list of output and their types
     """
     :param game_id:
     :return: dictionary of game details which includes the Headline, Blurb, and body of the story
@@ -104,4 +106,5 @@ def get_form_details(request):
                 if (str(home_id) == team1 and str(away_id) == team2) or (
                         str(home_id) == team2 and str(away_id) == team1):
                     display_dates.append(data)
-    return  display_dates
+    return display_dates
+
