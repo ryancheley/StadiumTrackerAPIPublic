@@ -5,7 +5,7 @@ from users.forms import CustomUserCreationForm
 from django_registration.backends.activation.views import RegistrationView
 
 urlpatterns = [
-    path('stadium', include('stadium_tracker.urls')),
+    path('stadium/', include('stadium_tracker.urls')),
     path('backend/', admin.site.urls),
     url(r'^accounts/register/$', RegistrationView.as_view(form_class=CustomUserCreationForm), name='django_registration_register'),
     path(r'accounts/', include('django_registration.backends.activation.urls')),
