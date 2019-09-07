@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from stadium_tracker.game_details import get_game_details, get_teams, get_form_details
+from stadium_tracker.venue_details import get_venues
 
 from stadium_tracker.models import GamesSeen
 from stadium_tracker.forms import GameSeenForm
@@ -87,3 +88,16 @@ class GamesSeenDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         obj = self.get_object()
         return obj.user == self.request.user
+
+
+class VenueList(ListView):
+    model = GamesSeen
+
+    def get(self, request, *args, **kwargs):
+        venues = get_venues()
+
+        context = {
+            'venues': venues,
+            'count': 0
+        }
+        return render(request, 'stadium_tracker/venue_list.html', context)
