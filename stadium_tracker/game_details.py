@@ -59,6 +59,29 @@ def get_game_details(game_id):
     return details
 
 
+def get_game_schedule_details(sportId, gamePk):
+    params = {
+        'sportId': sportId,
+        'gamePk': gamePk
+    }
+    url = 'http://statsapi.mlb.com/api/v1/schedule/games'
+    r = requests.get(url, params)
+    date = get_game_date(sportId, gamePk)
+    away_data = get_game_team_data(sportId, gamePk, False)
+    home_data = get_game_team_data(sportId, gamePk, True)
+    home = home_data.get('team_name')
+    away = away_data.get('team_name')
+    away_score = away_data.get('team_score')
+    home_score = home_data.get('team_score')
+    text = f'{date}: {away} vs {home}. Final Score: {away_score} - {home_score}'
+    data = {
+        'text': text,
+        'gamePk': gamePk
+    }
+
+    return data
+
+
 def get_teams():
     url = 'http://statsapi.mlb.com/api/v1/teams?sportId=1'
     r = requests.get(url)
@@ -107,4 +130,60 @@ def get_form_details(request):
                         str(home_id) == team2 and str(away_id) == team1):
                     display_dates.append(data)
     return display_dates
+
+
+def get_game_team_data(sportId: int, gamePk: int, home: bool)-> str:
+    team_params = {
+        'sportId': sportId,
+        'gamePk': gamePk
+    }
+    team_url = 'http://statsapi.mlb.com/api/v1/schedule/games'
+    team_response = requests.get(team_url, team_params)
+
+    if home:
+        team_id = team_response.json().get('dates')[0].get('games')[0].get('teams').get('home').get('team').get('id')
+        team_name = team_response.json().get('dates')[0].get('games')[0].get('teams').get('home').get('team').get('name')
+        score_params = {
+            'sportId': sportId,
+            'teamId': team_id,
+            'startDate': get_game_date(sportId, gamePk),
+            'endDate': get_game_date(sportId, gamePk),
+        }
+        score_url = 'http://statsapi.mlb.com/api/v1/schedule/'
+        score_response = requests.get(score_url, score_params)
+        team_score = score_response.json().get('dates')[0].get('games')[0].get('teams').get('home').get('score')
+        team_data = {
+            'team_id': team_id,
+            'team_name': team_name,
+            'team_score': team_score
+        }
+    else:
+        team_id = team_response.json().get('dates')[0].get('games')[0].get('teams').get('away').get('team').get('id')
+        team_name = team_response.json().get('dates')[0].get('games')[0].get('teams').get('away').get('team').get('name')
+        score_params = {
+            'sportId': sportId,
+            'teamId': team_id,
+            'startDate': get_game_date(sportId, gamePk),
+            'endDate': get_game_date(sportId, gamePk),
+        }
+        score_url = 'http://statsapi.mlb.com/api/v1/schedule/'
+        score_response = requests.get(score_url, score_params)
+        team_score = score_response.json().get('dates')[0].get('games')[0].get('teams').get('away').get('score')
+        team_data = {
+            'team_id': team_id,
+            'team_name': team_name,
+            'team_score': team_score
+        }
+    return team_data
+
+
+def get_game_date(sportId: int, gamePk: int)-> str:
+    params = {
+        'sportId': sportId,
+        'gamePk': gamePk
+    }
+    url = 'http://statsapi.mlb.com/api/v1/schedule/games'
+    r = requests.get(url, params)
+    game_date = r.json().get('dates')[0].get('date')
+    return game_date
 
