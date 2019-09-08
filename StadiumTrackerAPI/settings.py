@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     # third party apps
     'rest_framework',
     'rest_framework_swagger',
+    'django_nose',
 
     # Local
     'users.apps.UsersConfig',
@@ -97,6 +98,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'StadiumTrackerAPI.wsgi.application'
 
+# Use nose to run all tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# Tell nose to measure coverage on the 'foo' and 'bar' apps
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=foo,bar',
+]
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
