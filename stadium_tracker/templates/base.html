@@ -27,7 +27,7 @@
                           {% endfilter %}
                       </a></li>
                   {% endif %}
-                <li><a href="Pages/About">About</a></li>
+                <li><a href="/Pages/About">About</a></li>
                   {% if request.user.is_authenticated %}
                 <li><a href="{% url 'logout' %}">Logout</a></li>
                   {% else %}
