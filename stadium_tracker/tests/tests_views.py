@@ -94,3 +94,6 @@ class GamesSeenCreateTestCase(TestCase):
     pass
 
 
+@override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
+class GamesSeenCreateTestCase(TestCase):
+    pass
