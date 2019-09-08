@@ -2,14 +2,17 @@ from datetime import datetime
 import requests
 
 
-def get_game_details(game_id):
-    # TODO: Use GameID 8060 as a test for this method as it will return None and break stuff
-    # TODO: Get Team Names and Final Score from same API endpoint as get_form_details
-    # TODO: Add Type hints
-    # TODO: Add enumerated list of output and their types
+def get_game_details(game_id: int) -> dict:
     """
     :param game_id:
-    :return: dictionary of game details which includes the Headline, Blurb, and body of the story
+    :return: dictionary of
+        headline,
+        blurb,
+        body',
+        home',
+        away',
+        game_date,
+        game_id'
     """
     game_url = f'http://statsapi.mlb.com/api/v1/schedule/games?sportId=1&gamePk={game_id}'
     r_game = requests.get(game_url)
@@ -59,7 +62,15 @@ def get_game_details(game_id):
     return details
 
 
-def get_game_schedule_details(sportId, gamePk):
+def get_game_schedule_details(sportId: int, gamePk: int) -> dict:
+    """
+
+    :param sportId:
+    :param gamePk:
+    :return:
+        text: Text of a game
+        gamePk: Int of the gamePk
+    """
     params = {
         'sportId': sportId,
         'gamePk': gamePk
@@ -82,7 +93,10 @@ def get_game_schedule_details(sportId, gamePk):
     return data
 
 
-def get_teams():
+def get_teams() -> list:
+    """
+    :return: list of teams in alphabetical order
+    """
     url = 'http://statsapi.mlb.com/api/v1/teams?sportId=1'
     r = requests.get(url)
     teams = r.json().get('teams')
@@ -94,6 +108,13 @@ def get_teams():
 
 
 def get_form_details(request):
+    """
+
+    :param request: the request object from the page
+    :return: list of dictionaries
+        text: String of Game
+        gamePk: Int of the gamePk
+    """
     sportId = 1
     team1 = request.GET.get('team1')
     team2 = request.GET.get('team2')
@@ -132,7 +153,14 @@ def get_form_details(request):
     return display_dates
 
 
-def get_game_team_data(sportId: int, gamePk: int, home: bool)-> str:
+def get_game_team_data(sportId: int, gamePk: int, home: bool) -> str:
+    """
+
+    :param sportId:
+    :param gamePk:
+    :param home:
+    :return: team_data: dictionary includeing the team_id, team_name, team_score
+    """
     team_params = {
         'sportId': sportId,
         'gamePk': gamePk
@@ -178,6 +206,12 @@ def get_game_team_data(sportId: int, gamePk: int, home: bool)-> str:
 
 
 def get_game_date(sportId: int, gamePk: int)-> str:
+    """
+
+    :param sportId:
+    :param gamePk:
+    :return: game_date the date that a game took place
+    """
     params = {
         'sportId': sportId,
         'gamePk': gamePk
