@@ -88,3 +88,9 @@ class GamesSeenDetailViewTestCase(TestCase):
         response = self.client.get('/stadium/games/1')
         self.assertEqual(response.status_code, 200)
 
+
+@override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
+class GamesSeenCreateTestCase(TestCase):
+    pass
+
+
