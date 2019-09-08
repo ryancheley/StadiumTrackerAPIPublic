@@ -1,6 +1,7 @@
 from django.test import TestCase
 from stadium_tracker.venue_details import get_venues
-from stadium_tracker.game_details import get_teams, get_game_details, get_game_schedule_details
+from stadium_tracker.game_details import get_teams, get_game_details, get_game_schedule_details, get_game_team_data\
+    , get_game_date
 from datetime import datetime
 
 
@@ -90,7 +91,36 @@ class GameScheduleDetailsTestCase(TestCase):
         game_id = x.get('gamePk')
         self.assertEqual(game_id, 8060)
 
+
 class GetFormDetailsTestCase(TestCase):
 
     def test_get_form_details(self):
         pass
+
+
+class GetGameTeamData(TestCase):
+
+    def test_get_game_team_data_home(self):
+        x = get_game_team_data(1, 8060, True)
+        team_id = x.get('team_id')
+        team_name = x.get('team_name')
+        team_score = x .get('team_score')
+        self.assertEqual(team_id, 137)
+        self.assertEqual(team_name, 'San Francisco Giants')
+        self.assertEqual(team_score, 2)
+
+    def test_get_game_team_data_away(self):
+        x = get_game_team_data(1, 8060, False)
+        team_id = x.get('team_id')
+        team_name = x.get('team_name')
+        team_score = x .get('team_score')
+        self.assertEqual(team_id, 115)
+        self.assertEqual(team_name, 'Colorado Rockies')
+        self.assertEqual(team_score, 1)
+
+
+class GetGameDate(TestCase):
+
+    def test_get_game_date(self):
+        x = get_game_date(1, 8060)
+        self.assertEqual(x, '2001-07-19')
