@@ -90,4 +90,7 @@ class GameScheduleDetailsTestCase(TestCase):
         game_id = x.get('gamePk')
         self.assertEqual(game_id, 8060)
 
+class GetFormDetailsTestCase(TestCase):
 
+    def test_get_form_details(self):
+        pass
