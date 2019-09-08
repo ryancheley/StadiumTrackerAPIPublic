@@ -1,23 +1,7 @@
 from django.test import TestCase
-from stadium_tracker.venue_details import get_venues
 from stadium_tracker.game_details import get_teams, get_game_details, get_game_schedule_details, get_game_team_data\
     , get_game_date
 from datetime import datetime
-
-
-class VenueTestCase(TestCase):
-
-    def test_count_of_venues(self):
-        x = get_venues()
-        self.assertEqual(len(x), 32)
-
-    def test_name_of_first_venue(self):
-        x = get_venues()
-        self.assertEqual(x[0].get('name'), '3Com Park at Candlestick Point')
-
-    def test_id_of_first_venue(self):
-        x = get_venues()
-        self.assertEqual(x[0].get('id'), 29)
 
 
 class GetTeamsTestCase(TestCase):
