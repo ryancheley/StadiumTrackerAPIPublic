@@ -7,7 +7,7 @@ from users.models import CustomUser
 
 
 @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
-class GamesSeenListView(TestCase):
+class GamesSeenListViewTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         CustomUser.objects.create(
