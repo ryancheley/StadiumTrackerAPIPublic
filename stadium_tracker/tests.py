@@ -1,6 +1,6 @@
 from django.test import TestCase
 from stadium_tracker.venue_details import get_venues
-from stadium_tracker.game_details import get_teams, get_game_details
+from stadium_tracker.game_details import get_teams, get_game_details, get_game_schedule_details
 from datetime import datetime
 
 
@@ -78,5 +78,16 @@ class GameDetailsTestCase(TestCase):
         self.assertEqual(game_id, 566610)
 
 
+class GameScheduleDetailsTestCase(TestCase):
+
+    def test_get_game_schedule_details_text(self):
+        x = get_game_schedule_details(1, 8060)
+        text = x.get('text')
+        self.assertEqual(text, '2001-07-19: Colorado Rockies vs San Francisco Giants. Final Score: 1 - 2')
+
+    def test_get_game_schedule_details_game_id(self):
+        x = get_game_schedule_details(1, 8060)
+        game_id = x.get('gamePk')
+        self.assertEqual(game_id, 8060)
 
 
