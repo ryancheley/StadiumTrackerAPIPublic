@@ -29,22 +29,23 @@
     <form method="post">
     {% csrf_token %}
 
-    {% for field in form %}
       <li>
         <div class="mui-textfield">
             {{ field.errors }}
             <p>
             {{ g.text }}
+                {% for fields in form %}
+                    {{ fields }}
+                {% endfor %}
 
             <input class="mui-btn mui-btn--primary" name = "name" type="submit"
-                   value="{{ g.gamePk }}" type="button" />
+                   value="Add" type="button" />
             </p>
             {% if field.help_text %}
               <p class="help">{{ field.help_text|safe }}</p>
             {% endif %}
         </div>
       </li>
-    {% endfor %}
 
     </form>
     {% endfor %}

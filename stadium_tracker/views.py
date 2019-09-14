@@ -41,31 +41,18 @@ class GamesSeenCreate(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('stadium_tracker:gamesseen_list')
 
     def get(self, request, *args, **kwargs):
-        form = GameSeenForm
+        form = GameSeenForm()
         teams = get_teams()
         display_dates = get_form_details(request)
+
+        if display_dates:
+            form.fields['game_id'].initial = display_dates[0].get('gamePk')
 
         context = {
             'form': form,
             'teams': teams,
             'games': display_dates,
         }
-        return render(request, 'stadium_tracker/gamesseen_form.html', context)
-
-    def post(self, request, *args, **kwargs):
-        form = GameSeenForm
-        teams = get_teams()
-        game = GamesSeen()
-        game.game_id = int(request.POST.get('name'))
-        game.user_id = request.user.id
-        game.save()
-
-        context = {
-            'form': form,
-            'teams': teams,
-            'games': None,
-        }
-
         return render(request, 'stadium_tracker/gamesseen_form.html', context)
 
     def form_valid(self, form):
