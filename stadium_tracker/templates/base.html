@@ -20,6 +20,7 @@
             <td class="mui--text-right">
               <ul class="mui-list--inline mui--text-body2">
               <li><a href="http://blog.stadiatracker.com">Blog</a></li>
+              <li><a href="{% url 'stadium_tracker:venue_list' %}">Visited Stadia</a></li>
                   {% if request.user.is_authenticated %}
                       <li><a href="{% url 'stadium_tracker:gamesseen_list' %}">Welcome
                           {% filter title %}
