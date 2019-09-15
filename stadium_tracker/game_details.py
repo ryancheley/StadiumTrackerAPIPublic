@@ -143,9 +143,11 @@ def get_form_details(request):
                 home_score = games_dates[i].get('games')[j].get('teams').get('home').get('score')
                 text = f'{date}: {away} vs {home}. Final Score: {away_score} - {home_score}'
                 gamePk = games_dates[i].get('games')[j].get('gamePk')
+                venue_id = games_dates[i].get('games')[j].get('venue').get('id')
                 data = {
                     'text': text,
-                    'gamePk': gamePk
+                    'gamePk': gamePk,
+                    'venue_id': venue_id
                 }
                 if (str(home_id) == team1 and str(away_id) == team2) or (
                         str(home_id) == team2 and str(away_id) == team1):
