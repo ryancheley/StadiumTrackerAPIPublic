@@ -31,8 +31,11 @@
               <td>{{ game_details.home.errors }}</td>
           </tr>
       </table>
+      {% if game_details.headline %}
             <h3>  {{ game_details.headline }} </h3>
+
         <p>{{ game_details.body | safe }}</p>
+        {% endif %}
     </div>
   </div>
 

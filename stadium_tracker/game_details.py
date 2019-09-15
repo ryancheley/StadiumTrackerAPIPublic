@@ -28,9 +28,10 @@ def get_game_details(game_id: int) -> dict:
     r_story = requests.get(story_url)
     if r_story.json().get('editorial') is not None:
         recap = r_story.json().get('editorial').get('recap').get('mlb')
-        headline = recap.get('headline')
-        blurb = recap.get('blurb')
-        body = recap.get('body')
+        if recap is not None:
+            headline = recap.get('headline')
+            blurb = recap.get('blurb')
+            body = recap.get('body')
 
     boxscore_url = f'http://statsapi.mlb.com/api/v1/game/{game_id}/boxscore'
     r_boxscore = requests.get(boxscore_url)

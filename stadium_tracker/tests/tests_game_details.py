@@ -30,17 +30,17 @@ class GameDetailsTestCase(TestCase):
         self.assertEqual(blurb, None)
         self.assertEqual(body, None)
 
-    def test_get_game_details_not_none_headline(self):
-        x = get_game_details(566610)
+    def test_get_game_details_none_headline(self):
+        x = get_game_details(415686)
         headline = x.get('headline')
         blurb = x.get('blurb')
         body = x.get('body')
-        self.assertNotEquals(headline, None)
-        self.assertNotEquals(blurb, None)
-        self.assertNotEquals(body, None)
+        self.assertEquals(headline, None)
+        self.assertEquals(blurb, None)
+        self.assertEquals(body, None)
 
     def test_get_team_details(self):
-        x = get_game_details(566610)
+        x = get_game_details(415686)
         home_team = x.get('home').get('team')
         away_team = x.get('away').get('team')
         home_score = x.get('home').get('runs')
@@ -51,16 +51,16 @@ class GameDetailsTestCase(TestCase):
         away_errors = x.get('away').get('errors')
         game_date = x.get('game_date')
         game_id = x.get('game_id')
-        self.assertEqual(home_team, 'St. Louis Cardinals')
-        self.assertEqual(away_team, 'Arizona Diamondbacks')
-        self.assertEqual(home_score, 2)
-        self.assertEqual(home_hits, 4)
-        self.assertEqual(home_errors, 0)
-        self.assertEqual(away_score, 4)
-        self.assertEqual(away_hits, 6)
-        self.assertEqual(away_errors, 1)
-        self.assertEqual(game_date, datetime(2019, 7, 13, 0, 15))
-        self.assertEqual(game_id, 566610)
+        self.assertEqual(home_team, 'San Diego Padres')
+        self.assertEqual(away_team, 'Los Angeles Dodgers')
+        self.assertEqual(home_score, 1)
+        self.assertEqual(home_hits, 6)
+        self.assertEqual(home_errors, 1)
+        self.assertEqual(away_score, 5)
+        self.assertEqual(away_hits, 7)
+        self.assertEqual(away_errors, 0)
+        self.assertEqual(game_date, datetime(2015, 9, 6, 20, 10))
+        self.assertEqual(game_id, 415686)
 
 
 class GameScheduleDetailsTestCase(TestCase):
