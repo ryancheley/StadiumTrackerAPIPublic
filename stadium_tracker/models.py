@@ -1,8 +1,10 @@
 from django.db import models
+from django.db.models import Count
 from django.contrib.auth.models import User
 from StadiumTrackerAPI import settings
 from datetime import datetime
 from stadium_tracker.game_details import get_game_details
+from stadium_tracker.venue_details import get_venue_details
 
 
 class GamesSeen(models.Model):
@@ -30,15 +32,14 @@ class GamesSeen(models.Model):
     def get_venue_count(self):
         """
 
-        :return: a list of dictiories that includes the Venue Name and the Count of times that Venue has been visited
+        :return: a list of dictionaries that includes the Venue Name and the Count of times that Venue has been visited
         """
-        game_venue = [
-            {'name': 'Petco', 'count': 4},
-            {'name': 'Kaufman', 'count': 1},
-            {'name': 'Busch', 'count': 1},
-            {'name': 'Dodger Stadium', 'count': 10},
-        ]
+        game_venue = []
+        details = GamesSeen.objects.all().values('venue_id').annotate(total=Count('venue_id')).order_by('-total')
+        #game_venue = GamesSeen.objects.all().values('venue_id').annotate(total=Count('venue_id')).order_by('-total')
+        for d in details:
+            game_venue.append({
+                'name': get_venue_details(d.get('venue_id')),
+                'total': d.get('total')
+            })
         return game_venue
-
-    class Meta:
-        ordering = ['-modify_date']

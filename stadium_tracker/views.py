@@ -47,6 +47,7 @@ class GamesSeenCreate(LoginRequiredMixin, CreateView):
 
         if display_dates:
             form.fields['game_id'].initial = display_dates[0].get('gamePk')
+            form.fields['venue_id'].initial = display_dates[0].get('venue_id')
 
         context = {
             'form': form,
@@ -81,10 +82,9 @@ class VenueList(ListView):
     model = GamesSeen
 
     def get(self, request, *args, **kwargs):
-        venues = get_venues()
+        venues = GamesSeen.get_venue_count(self)
 
         context = {
             'venues': venues,
-            'count': 0
         }
         return render(request, 'stadium_tracker/venue_list.html', context)
