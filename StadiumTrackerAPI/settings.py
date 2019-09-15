@@ -21,14 +21,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.environ['SECRET_KEY']
-SECRET_KEY = 'cdl%x0(d7kh+-u6uj(#mza-mq^*qoo_w78r7bhab!9-g7p42fb'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# if os.environ['ENVIRONMENT']=='prod':
-#    DEBUG = False
-# else:
-DEBUG = True
+if os.environ['ENVIRONMENT']=='prod':
+   DEBUG = False
+else:
+    DEBUG = True
 
 if not DEBUG:
     SECURE_HSTS_SECONDS = 60
@@ -174,8 +173,8 @@ LOGIN_REDIRECT_URL = 'stadium_tracker:gamesseen_list'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']
-# EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
+EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']
+EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
