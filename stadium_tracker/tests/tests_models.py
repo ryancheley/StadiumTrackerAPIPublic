@@ -25,6 +25,7 @@ class GamesSeenModelTest(TestCase):
         x = GamesSeen.objects.create(
             game_id=8060,
             user_id=1,
+            venue_id=2395,
         )
         return x
 

@@ -36,6 +36,7 @@ class GamesSeenListViewTestCase(TestCase):
                 modify_date=datetime.now,
                 delete_ind=False,
                 user_id=1,
+                venue_id=5
             )
 
     def test_view_url_exists_at_desired_location(self):
@@ -82,6 +83,7 @@ class GamesSeenDetailViewTestCase(TestCase):
                 modify_date=datetime.now,
                 delete_ind=False,
                 user_id=1,
+                venue_id=5,
             )
 
     def test_view_url_exists_at_desired_location(self):
