@@ -13,16 +13,16 @@
               <th>Errors</th>
           </tr>
           <tr>
-              <td>{{ game_details.away.team }}</td>
-              <td>{{ game_details.away.runs }}</td>
-              <td>{{ game_details.away.hits }}</td>
-              <td>{{ game_details.away.errors }}</td>
+              <td>{{ game_details.away_team }}</td>
+              <td>{{ game_details.away_runs }}</td>
+              <td>{{ game_details.away_hits }}</td>
+              <td>{{ game_details.away_errors }}</td>
           </tr>
           <tr>
-              <td>{{ game_details.home.team }}</td>
-              <td>{{ game_details.home.runs }}</td>
-              <td>{{ game_details.home.hits }}</td>
-              <td>{{ game_details.home.errors }}</td>
+              <td>{{ game_details.home_team }}</td>
+              <td>{{ game_details.home_runs }}</td>
+              <td>{{ game_details.home_hits }}</td>
+              <td>{{ game_details.home_errors }}</td>
           </tr>
       </table>
 
@@ -30,7 +30,7 @@
     {% csrf_token %}
     <p class="mui--text-danger">Are you sure you want to delete this game?</p>
     <input class="mui-btn mui-btn--danger" type="submit" value="Delete" />
-    <a class="mui-btn mui-btn--raised" href="{% url "stadium_tracker:gamesseen_list" %}">Go Back</a>
+    <a class="mui-btn mui-btn--raised" href="{% url "stadium_tracker:gamedetails_list" game_details.id %}">Go Back</a>
   </form>
 
 {% endblock %}

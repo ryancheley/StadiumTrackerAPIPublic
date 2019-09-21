@@ -7,6 +7,7 @@
     <thead>
         <tr>
             <th>Game</th>
+            <th>Details</th>
             <th>User</th>
             <th colspan="2">
                 &nbsp;
@@ -15,20 +16,22 @@
 
     </thead>
     <tbody>
-    {% for g,m in details %}
+    {% for g in game_list %}
     <tr>
         <td>
-            <a href="{% url "stadium_tracker:gamesseen_detail" m.id %}">
-            {{ g.game_date }}
+            {{g.game_datetime}}
             <br>
-            {{ g.away.team }} vs. {{ g.home.team }}
+            {{g.away_team}} vs {{g.home_team}}
             <br>
-            Final Score: {{ g.away.runs }} - {{ g.home.runs }}
+            Final Score: {{g.away_runs}} - {{g.home_runs}}
             </a>
     </td>
     <td>
+        <a href="{% url 'stadium_tracker:gamedetails_list' g.id %}">Details</a>
+    </td>
+    <td>
         {% filter title%}
-        {{ m.user }}
+        {{g.user}}
         {% endfilter %}
     </td>
     {% if request.user == m.user %}
@@ -39,12 +42,13 @@
 
     </tr>
     {% endfor %}
+
     </tbody>
 </table>
 
     <div class="mui-container">
     {% if request.user.is_authenticated %}
-        <a class="mui-btn mui-btn--primary" href="{% url "stadium_tracker:gamesseen_new" %}">Add a Game Seen</a>
+        <a class="mui-btn mui-btn--primary" href="{% url "stadium_tracker:gamedetails_create" %}">Add a Game Seen</a>
     {% else %}
         <a class="mui-btn mui-btn--primary" href="{% url "login" %}">Log into add a game seen</a>
     {% endif %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load tz %}
+
+{% block content %}
+
+
+  <div class="mui-panel">
+    <div class="mui-container">
+    <h1>
+        {{ details.away_team }} at {{ details.home_team }}
+    </h1>
+    <h2>{{ details.game_datetime | timezone:"America/Los_Angeles"}}</h2>
+      <table>
+          <tr>
+              <th>Team</th>
+              <th>Runs</th>
+              <th>Hits</th>
+              <th>Errors</th>
+          </tr>
+          <tr>
+              <td>{{ details.away_team }}</td>
+              <td>{{ details.away_runs }}</td>
+              <td>{{ details.away_hits }}</td>
+              <td>{{ details.away_errors }}</td>
+          </tr>
+          <tr>
+              <td>{{ details.home_team }}</td>
+              <td>{{ details.home_runs }}</td>
+              <td>{{ details.home_hits }}</td>
+              <td>{{ details.home_errors }}</td>
+          </tr>
+      </table>
+      {% if details.game_headline %}
+            <h3>  {{ details.game_headline }} </h3>
+
+        <p>{{ details.game_body | safe }}</p>
+        {% endif %}
+    </div>
+  </div>
+
+  <div class="mui-container">
+    <a class="mui-btn mui-btn--raised" href="{% url "stadium_tracker:game_list" %}">Go Back</a>
+    <a class="mui-btn mui-btn--danger" href="{% url "stadium_tracker:gamesseen_delete" details.id %}">Delete</a>
+  </div>
+
+{% endblock %}

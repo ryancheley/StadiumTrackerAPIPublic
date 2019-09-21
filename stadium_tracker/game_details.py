@@ -2,6 +2,63 @@ from datetime import datetime
 import requests
 
 
+def get_game_object(game_id):
+    game_url = f'http://statsapi.mlb.com/api/v1/schedule/games?sportId=1&gamePk={game_id}'
+    game = requests.get(game_url)
+    return game
+
+def get_game_story(game_id):
+    story_url = f'http://statsapi.mlb.com/api/v1/game/{game_id}/content'
+    story = requests.get(story_url)
+    return story
+
+def get_game_recap(game_id, type):
+    story = get_game_story(game_id)
+    if story.json().get('editorial') is not None:
+        recap = story.json().get('editorial').get('recap').get('mlb')
+        if recap is not None:
+            data = recap.get(f'{type}')
+        return data
+
+def get_boxscore(game_id, type):
+    boxscore_url = f'http://statsapi.mlb.com/api/v1/game/{game_id}/boxscore'
+    r_boxscore = requests.get(boxscore_url)
+    boxscore = r_boxscore.json()
+    teams = boxscore.get('teams')
+    if len(boxscore.get('teams').get('home').get('teamStats')) > 0:
+        team = {
+            'hits': teams.get(f'{type}').get('teamStats').get('batting').get('hits'),
+            'runs': teams.get(f'{type}').get('teamStats').get('batting').get('runs'),
+            'errors': teams.get(f'{type}').get('teamStats').get('fielding').get('errors'),
+            'team': teams.get(f'{type}').get('team').get('name'),
+        }
+    else:
+        team = None
+    return team
+
+def get_score(sportId, gamePk, type):
+    params = {
+        'sportId': sportId,
+        'gamePk': gamePk,
+    }
+    url = 'http://statsapi.mlb.com/api/v1/schedule/games'
+    r = requests.get(url, params)
+    games_date = r.json().get('dates')[0].get('date')
+    home_team_id = r.json().get('dates')[0].get('games')[0].get('teams').get('home').get('team').get('id')
+    away_team_id = r.json().get('dates')[0].get('games')[0].get('teams').get('away').get('team').get('id')
+    teamId = f'{home_team_id},{away_team_id}'
+    params2 = {
+        'sportId': sportId,
+        'teamId': teamId,
+        'startDate': games_date,
+        'endDate': games_date,
+    }
+    r2 = requests.get(url, params2)
+    score = r2.json().get('dates')[0].get('games')[0].get('teams').get(f'{type}').get('score')
+    return score
+
+
+
 def get_game_details(game_id: int) -> dict:
     """
     :param game_id:
@@ -17,6 +74,7 @@ def get_game_details(game_id: int) -> dict:
     game_url = f'http://statsapi.mlb.com/api/v1/schedule/games?sportId=1&gamePk={game_id}'
     r_game = requests.get(game_url)
     game_date = r_game.json().get('dates')[0].get('games')[0].get('gameDate')
+    game_venue = r_game.json().get('dates')[0].get('games')[0].get('venue')
 
     headline = None
     blurb = None
@@ -59,6 +117,7 @@ def get_game_details(game_id: int) -> dict:
         'away': away_team,
         'game_date': datetime.strptime(game_date, '%Y-%m-%dT%H:%M:%SZ'),
         'game_id': game_id,
+        'game_venue': game_venue,
     }
     return details
 
