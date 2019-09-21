@@ -1,17 +1,16 @@
 from django.test import TestCase
-from stadium_tracker.venue_details import get_venues
+from stadium_tracker.venue_details import get_venue_details
 
 
 class VenueTestCase(TestCase):
 
-    def test_count_of_venues(self):
-        x = get_venues()
-        self.assertEqual(len(x), 32)
+    def test_return_name_when_valid_id_passed(self):
+        v = get_venue_details(1)
+        self.assertEqual(v, 'Angel Stadium')
 
-    def test_name_of_first_venue(self):
-        x = get_venues()
-        self.assertEqual(x[0].get('name'), '3Com Park at Candlestick Point')
+    def test_return_none_when_invalid_id_passed(self):
+        v_num = get_venue_details(0)
+        v_string = get_venue_details('A')
+        self.assertEqual(v_num, None)
+        self.assertEqual(v_string, None)
 
-    def test_id_of_first_venue(self):
-        x = get_venues()
-        self.assertEqual(x[0].get('id'), 29)
