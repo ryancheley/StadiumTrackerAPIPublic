@@ -43,7 +43,7 @@ class GameDetailsForm(ModelForm):
             'away_runs': forms.HiddenInput(),
             'away_hits': forms.HiddenInput(),
             'away_errors': forms.HiddenInput(),
-            'game_datetime': forms.HiddenInput(),
+            # 'game_datetime': forms.HiddenInput(),
             'game_headline': forms.HiddenInput(),
             'game_body': forms.HiddenInput(),
             'game_id': forms.HiddenInput(),

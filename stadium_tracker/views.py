@@ -89,14 +89,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
     model = GameDetails
     form_class = GameDetailsForm
     template_name = 'stadium_tracker/gamedetails_create.html'
-    success_url = reverse_lazy('stadium_tracker:game_list')
-
-    def get_queryset(self):
-        """
-        This is mostly a place holder for now
-        :return:
-        """
-        pass
+    success_url = reverse_lazy('stadium_tracker:my_game_list')
 
     def get(self, request, *args, **kwargs):
         form = GameDetailsForm()
@@ -144,7 +137,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
 class GameDetailDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = GameDetails
     context_object_name = 'game_details'
-    success_url = reverse_lazy('stadium_tracker:game_list')
+    success_url = reverse_lazy('stadium_tracker:my_game_list')
 
     def test_func(self):
         obj = self.get_object()
