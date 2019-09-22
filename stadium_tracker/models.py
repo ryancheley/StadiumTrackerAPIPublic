@@ -39,6 +39,9 @@ class GameDetails(models.Model):
             })
         return game_venue
 
+    class Meta:
+        unique_together = ['user','game_id']
+
 class GamesSeen(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     game_id = models.IntegerField()

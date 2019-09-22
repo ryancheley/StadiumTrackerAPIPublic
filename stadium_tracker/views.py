@@ -2,7 +2,9 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
+from django.db import IntegrityError
+from django.http import HttpResponse
 from stadium_tracker.game_details import *
 from stadium_tracker.venue_details import *
 
@@ -131,7 +133,32 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super().form_valid(form)
+        try:
+            return super().form_valid(form)
+        except IntegrityError:
+            display_dates = get_form_details(self.request)
+            game_id = display_dates[0].get('gamePk')
+            home_details = get_boxscore(game_id, 'home')
+            away_details = get_boxscore(game_id, 'away')
+            game_date = get_game_date(game_id)
+            game_date = game_date.date().strftime('%m/%d/%Y')
+            teams = get_teams()
+            home_team = home_details.get('team')
+            away_team = away_details.get('team')
+            text = f'{home_team} vs {away_team} on {game_date}'
+            user = self.request.user
+            user = str(user).title()
+            error = f"The game has already been added for user {user} <br> {text}"
+            context = {
+                'teams': teams,
+                'pages': {
+                    'header': 'Add a Game'
+                },
+                'error': error
+
+
+            }
+            return render(self.request, 'stadium_tracker/gamedetails_form.html', context=context)
 
 
 class GameDetailDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):

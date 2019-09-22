@@ -7,6 +7,11 @@
         {{ pages.header }}
     {% endblock %}
   </h1>
+    <p class="mui--text-danger">
+    <strong>
+        {{ error | safe }}
+    </strong>
+    </p>
     <form method="get">
         <select name="team1">
             {% for t in teams %}
