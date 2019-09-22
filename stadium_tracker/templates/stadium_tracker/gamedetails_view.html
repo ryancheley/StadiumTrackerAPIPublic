@@ -4,12 +4,14 @@
 
 {% block content %}
 
+    <h1 class="mui--text-display1">
+        {% block title %}
+            {{ details.away_team }} at {{ details.home_team }}
+        {% endblock %}
+    </h1>
 
   <div class="mui-panel">
     <div class="mui-container">
-    <h1>
-        {{ details.away_team }} at {{ details.home_team }}
-    </h1>
     <h2>{{ details.game_datetime | timezone:"America/Los_Angeles"}}</h2>
       <table>
           <tr>

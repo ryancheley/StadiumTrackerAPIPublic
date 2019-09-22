@@ -2,7 +2,11 @@
 
 {% block content %}
 
-  <h1 class="mui--text-display1">{% if gamesseen %}Edit{% else %}New{% endif %} Game</h1>
+  <h1 class="mui--text-display1">
+    {% block title %}
+        {{ pages.header }}
+    {% endblock %}
+  </h1>
     <form method="get">
         <select name="team1">
             {% for t in teams %}

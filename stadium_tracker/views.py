@@ -17,6 +17,9 @@ class GamesViewList(ListView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['details'] = GameDetails.objects.all()
+        data['pages'] = {
+                'header': 'List of Games'
+            }
         return data
 
 
@@ -35,6 +38,9 @@ class VenueList(ListView):
 
         context = {
             'venues': venues,
+            'pages': {
+                'header': 'Visited Stadia'
+            }
         }
         return render(request, 'stadium_tracker/venue_list.html', context)
 
@@ -82,7 +88,11 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
             'form': form,
             'teams': teams,
             'games': display_dates,
-            'test': request.GET
+            'test': request.GET,
+            'pages': {
+                'header': 'Add a Game'
+            }
+
         }
         return render(request, 'stadium_tracker/gamedetails_form.html', context)
 
