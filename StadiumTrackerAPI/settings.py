@@ -167,8 +167,8 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 ACCOUNT_ACTIVATION_DAYS = 7
-LOGOUT_REDIRECT_URL = 'stadium_tracker:gamesseen_list'
-LOGIN_REDIRECT_URL = 'stadium_tracker:gamesseen_list'
+LOGOUT_REDIRECT_URL = 'stadium_tracker:game_list'
+LOGIN_REDIRECT_URL = 'stadium_tracker:game_list'
 
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
