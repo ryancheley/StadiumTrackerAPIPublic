@@ -57,28 +57,26 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
         teams = get_teams()
         display_dates = get_form_details(request)
         if len(request.GET)>0:
-            game_details = get_game_details(display_dates[0].get('gamePk'))
-            game_id = game_details.get('game_id')
+            game_id = display_dates[0].get('gamePk')
             headline = get_game_recap(game_id, 'headline')
             body = get_game_recap(game_id, 'body')
             home_details = get_boxscore(game_id, 'home')
             away_details = get_boxscore(game_id, 'away')
-            game_date = get_game_date(1, game_id)
+            game_date = get_game_date(game_id)
 
-            if game_details:
-                form.fields['game_headline'].initial = headline
-                form.fields['game_body'].initial = body
-                form.fields['home_team'].initial = home_details.get('team')
-                form.fields['home_hits'].initial = home_details.get('hits')
-                form.fields['home_runs'].initial = home_details.get('runs')
-                form.fields['home_errors'].initial = home_details.get('errors')
-                form.fields['away_team'].initial = away_details.get('team')
-                form.fields['away_hits'].initial = away_details.get('hits')
-                form.fields['away_runs'].initial = away_details.get('runs')
-                form.fields['away_errors'].initial = away_details.get('errors')
-                form.fields['game_datetime'].initial = game_date
-                form.fields['game_id'].initial = game_id
-                form.fields['venue_id'].initial = game_details.get('game_venue').get('id')
+            form.fields['game_headline'].initial = headline
+            form.fields['game_body'].initial = body
+            form.fields['home_team'].initial = home_details.get('team')
+            form.fields['home_hits'].initial = home_details.get('hits')
+            form.fields['home_runs'].initial = home_details.get('runs')
+            form.fields['home_errors'].initial = home_details.get('errors')
+            form.fields['away_team'].initial = away_details.get('team')
+            form.fields['away_hits'].initial = away_details.get('hits')
+            form.fields['away_runs'].initial = away_details.get('runs')
+            form.fields['away_errors'].initial = away_details.get('errors')
+            form.fields['game_datetime'].initial = game_date
+            form.fields['game_id'].initial = game_id
+            form.fields['venue_id'].initial = get_venue_id(game_id)
 
         context = {
             'form': form,
