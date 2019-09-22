@@ -53,7 +53,11 @@
 
     <div class="mui-container">
     {% if request.user.is_authenticated %}
+        {% if venue %}
+        <a class="mui-btn mui-btn--primary" href="{% url "stadium_tracker:venue_list" %}">Go Back</a>
+        {% else %}
         <a class="mui-btn mui-btn--primary" href="{% url "stadium_tracker:gamedetails_create" %}">Add a Game Seen</a>
+        {% endif %}
     {% else %}
         <a class="mui-btn mui-btn--primary" href="{% url "login" %}">Log into add a game seen</a>
     {% endif %}

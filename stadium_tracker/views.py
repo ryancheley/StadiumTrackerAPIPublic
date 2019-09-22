@@ -56,6 +56,7 @@ class StadiumGamesViewList(LoginRequiredMixin, ListView):
         venue_id = self.kwargs['venue_id']
         venue = get_venue_details(venue_id)
         data = super().get_context_data(**kwargs)
+        data['venue'] = venue
         data['pages'] = {
                 'header': f'List of Games for {venue}'
             }
