@@ -33,6 +33,7 @@ class GameDetails(models.Model):
         details = GameDetails.objects.all().values('venue_id').annotate(total=Count('venue_id')).order_by('-total')
         for d in details:
             game_venue.append({
+                'venue_id': d.get('venue_id'),
                 'name': get_venue_details(d.get('venue_id')),
                 'total': d.get('total')
             })

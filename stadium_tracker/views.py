@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.shortcuts import render, get_object_or_404
 from stadium_tracker.game_details import *
+from stadium_tracker.venue_details import *
 
 from stadium_tracker.models import GameDetails
 from stadium_tracker.forms import GameDetailsForm
@@ -38,6 +39,25 @@ class MyGamesViewList(LoginRequiredMixin, ListView):
         data = super().get_context_data(**kwargs)
         data['pages'] = {
                 'header': f'List of Games for {str(user).title()}'
+            }
+        return data
+
+
+class StadiumGamesViewList(LoginRequiredMixin, ListView):
+    model = GameDetails
+    context_object_name = 'game_list'
+    template_name = 'stadium_tracker/game_list.html'
+
+    def get_queryset(self):
+        queryset = GameDetails.objects.filter(venue_id=self.kwargs['venue_id'])
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        venue_id = self.kwargs['venue_id']
+        venue = get_venue_details(venue_id)
+        data = super().get_context_data(**kwargs)
+        data['pages'] = {
+                'header': f'List of Games for {venue}'
             }
         return data
 
