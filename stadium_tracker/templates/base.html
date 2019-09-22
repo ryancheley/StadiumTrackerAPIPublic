@@ -22,10 +22,13 @@
               <li><a href="http://blog.stadiatracker.com">Blog</a></li>
               <li><a href="{% url 'stadium_tracker:venue_list' %}">Visited Stadia</a></li>
                   {% if request.user.is_authenticated %}
-                      <li><a href="{% url 'stadium_tracker:game_list' %}">Welcome
+                      <li><a href="{% url 'stadium_tracker:my_game_list' %}">Welcome
                           {% filter title %}
                           {{ request.user }}
                           {% endfilter %}
+                      </a></li>
+                  {% else %}
+                      <li><a href="{% url 'stadium_tracker:game_list' %}">All Games
                       </a></li>
                   {% endif %}
                 <li><a href="/Pages/About">About</a></li>

@@ -2,7 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from stadium_tracker.game_details import *
 
 from stadium_tracker.models import GameDetails
@@ -19,6 +19,25 @@ class GamesViewList(ListView):
         data['details'] = GameDetails.objects.all()
         data['pages'] = {
                 'header': 'List of Games'
+            }
+        return data
+
+
+class MyGamesViewList(LoginRequiredMixin, ListView):
+    model = GameDetails
+    context_object_name = 'game_list'
+    template_name = 'stadium_tracker/game_list.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = GameDetails.objects.filter(user_id=user)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+        data = super().get_context_data(**kwargs)
+        data['pages'] = {
+                'header': f'List of Games for {str(user).title()}'
             }
         return data
 
