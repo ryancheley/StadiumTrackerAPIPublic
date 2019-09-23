@@ -9,7 +9,18 @@
     </h1>
     {{ pages.page_content | safe }}
     <br>
-    {{ test }}
+        <div class="mui-list--unstyled">
+
+    {% if pages.title == 'Home'%}
+        <h2>Most Recently Added Games</h2>
+        {% for g in games %}
+            <a href="{% url 'stadium_tracker:gamedetails_list' g.id %}"> {{ g.user | title}} saw {{ g.home_team }} vs {{ g.away_team }} on {{ g.game_datetime }}</a>
+            <br>
+        {% endfor %}
+    {% endif %}
+        </div>
+    <div class="mui--divider-left"></div>
+
 
 
 {% endblock %}

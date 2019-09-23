@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from content.models import Content
+from stadium_tracker.models import GameDetails
 
 
 class ContentTemplateView(TemplateView):
@@ -15,4 +16,5 @@ class ContentTemplateView(TemplateView):
         else:
             title = 'Home'
         data['pages'] = Content.objects.get(title=title)
+        data['games'] = GameDetails.objects.all().order_by('-create_date')[:5]
         return data

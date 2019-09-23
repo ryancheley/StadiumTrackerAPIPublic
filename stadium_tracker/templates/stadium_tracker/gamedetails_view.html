@@ -45,6 +45,8 @@
     <a class="mui-btn mui-btn--raised" href="{% url "stadium_tracker:my_game_list" %}">Go Back</a>
     {% if request.user.is_authenticated and request.user == details.user %}
     <a class="mui-btn mui-btn--danger" href="{% url "stadium_tracker:gamesseen_delete" details.id %}">Delete</a>
+    {% elif request.user.is_authenticated and request.user != details.user %}
+    <a class="mui-btn mui-btn--primary" href="{% url "stadium_tracker:gamedetails_create"%}">Add</a>
     {% endif %}
   </div>
 
