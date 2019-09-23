@@ -4,18 +4,19 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.db import IntegrityError
-from django.http import HttpResponse
 from stadium_tracker.game_details import *
 from stadium_tracker.venue_details import *
 
 from stadium_tracker.models import GameDetails
 from stadium_tracker.forms import GameDetailsForm
 
+PAGINATION_DEFAULT = 5
 
 class GamesViewList(ListView):
     model = GameDetails
     context_object_name = 'game_list'
     template_name = 'stadium_tracker/game_list.html'
+    paginate_by = PAGINATION_DEFAULT
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -30,6 +31,7 @@ class MyGamesViewList(LoginRequiredMixin, ListView):
     model = GameDetails
     context_object_name = 'game_list'
     template_name = 'stadium_tracker/game_list.html'
+    paginate_by = PAGINATION_DEFAULT
 
     def get_queryset(self):
         user = self.request.user
@@ -49,6 +51,8 @@ class StadiumGamesViewList(LoginRequiredMixin, ListView):
     model = GameDetails
     context_object_name = 'game_list'
     template_name = 'stadium_tracker/game_list.html'
+    paginate_by = PAGINATION_DEFAULT
+
 
     def get_queryset(self):
         queryset = GameDetails.objects.filter(venue_id=self.kwargs['venue_id'])
