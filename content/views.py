@@ -14,7 +14,7 @@ class ContentTemplateView(TemplateView):
         if 'name' in self.kwargs.keys():
             title = self.kwargs['name']
         else:
-            title = 'Home'
+            title = 'Stadia Tracker'
         data['pages'] = Content.objects.get(title=title)
         data['games'] = GameDetails.objects.all().order_by('-create_date')[:5]
         return data
