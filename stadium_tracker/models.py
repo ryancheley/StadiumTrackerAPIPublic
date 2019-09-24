@@ -6,6 +6,20 @@ from datetime import datetime
 from stadium_tracker.venue_details import get_venue_details
 
 
+class Venues(models.Model):
+    venue_id = models.IntegerField()
+    venue_name = models.CharField(max_length=254)
+    home_team_id = models.IntegerField()
+    division_id = models.IntegerField()
+    street_address_1 = models.CharField(max_length=254)
+    street_address_2 = models.CharField(max_length=254)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=2)
+    zip = models.CharField(max_length=9)
+    latitude = models.DecimalField(max_digits=8, decimal_places=5)
+    longitude = models.DecimalField(max_digits=8, decimal_places=5)
+
+
 class GameDetails(models.Model):
     home_team = models.CharField(max_length=100)
     home_runs = models.IntegerField()
