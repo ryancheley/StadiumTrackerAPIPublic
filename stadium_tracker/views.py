@@ -47,7 +47,7 @@ class MyGamesViewList(LoginRequiredMixin, ListView):
         return data
 
 
-class StadiumGamesViewList(LoginRequiredMixin, ListView):
+class StadiumGamesViewList(ListView):
     model = GameDetails
     context_object_name = 'game_list'
     template_name = 'stadium_tracker/game_list.html'
