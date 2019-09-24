@@ -2,28 +2,30 @@
 {% load tz %}
 
 {% block content %}
+<div class="mui-panel">
+    <div class="mui-container-fluid">
+        <div class="mui-row">
+            <div class="mui-col-md-8">
+            <h1>
+            {% block title %}
+                {{pages.title}}
+            {% endblock %}
+            </h1>
+            {{ pages.page_content | safe }}
+            </div>
 
-    <h1>
-    {% block title %}
-        {{pages.title}}
-    {% endblock %}
-    </h1>
-    {{ pages.page_content | safe }}
-    <br>
-        <div class="mui-list--unstyled">
+            <div class="mui-col-md-4">
+                <h2>Most Recently Added Games</h2>
+                <ul class="mui-list">
+                {% for g in games %}
+                    <li>
+                        <a href="{% url 'stadium_tracker:gamedetails_list' g.id %}"> <strong>{{ g.user | title}}</strong> saw {{ g.home_team }} vs {{ g.away_team }} on {{ g.game_datetime  | timezone:"America/Los_Angeles"}}</a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
 
-    {% if pages.title == 'Home' or pages.title == 'Stadia Tracker'%}
-        <h2>Most Recently Added Games</h2>
-        {% for g in games %}
-            <a href="{% url 'stadium_tracker:gamedetails_list' g.id %}"> {{ g.user | title}} saw {{ g.home_team }} vs {{ g.away_team }} on {{ g.game_datetime  | timezone:"America/Los_Angeles"}}
-            added at {{ g.create_date  | timezone:"America/Los_Angeles"}}
-            </a>
-            <br>
-        {% endfor %}
-    {% endif %}
         </div>
-    <div class="mui--divider-left"></div>
-
-
-
+    </div>
+</div>
 {% endblock %}
