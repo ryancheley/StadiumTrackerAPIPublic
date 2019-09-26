@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from StadiumTrackerAPI import settings
 from datetime import datetime
 from stadium_tracker.venue_details import get_venue_details
+import requests
 
 
 class Venues(models.Model):
@@ -11,13 +12,22 @@ class Venues(models.Model):
     venue_name = models.CharField(max_length=254)
     home_team_id = models.IntegerField()
     division_id = models.IntegerField()
-    street_address_1 = models.CharField(max_length=254)
-    street_address_2 = models.CharField(max_length=254)
-    city = models.CharField(max_length=100)
-    state = models.CharField(max_length=2)
-    zip = models.CharField(max_length=9)
-    latitude = models.DecimalField(max_digits=8, decimal_places=5)
-    longitude = models.DecimalField(max_digits=8, decimal_places=5)
+    street_address_1 = models.CharField(max_length=254, null=True, blank=True)
+    street_address_2 = models.CharField(max_length=254, null=True, blank=True)
+    city = models.CharField(max_length=100, null=True, blank=True)
+    state = models.CharField(max_length=2, null=True, blank=True)
+    zip = models.CharField(max_length=9, null=True, blank=True)
+    latitude = models.DecimalField(max_digits=8, decimal_places=5, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=8, decimal_places=5, null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.venue_name}'
+
+    def get_division_name(self):
+        url = f'http://statsapi.mlb.com/api/v1/divisions/{self.division_id}'
+        r = requests.get(url)
+        division_name = r.json().get('divisions')[0].get('name')
+        return division_name
 
 
 class GameDetails(models.Model):
@@ -53,6 +63,10 @@ class GameDetails(models.Model):
             })
         return game_venue
 
+    def get_user_stadium_visited(self):
+        visited = GameDetails.objects.filter(venue_id=self.venue_id).filter(user=self.user)
+        return visited
+
     class Meta:
         unique_together = ['user','game_id']
 
@@ -70,3 +84,5 @@ class GamesSeen(models.Model):
     def save(self, *args, **kwargs):
         self.modify_date = datetime.now()
         super(GamesSeen, self).save(*args, **kwargs)
+
+

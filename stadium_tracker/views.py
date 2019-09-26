@@ -6,8 +6,9 @@ from django.shortcuts import render
 from django.db import IntegrityError
 from stadium_tracker.game_details import *
 from stadium_tracker.venue_details import *
+from stadium_tracker.league_details import *
 
-from stadium_tracker.models import GameDetails
+from stadium_tracker.models import GameDetails, Venues
 from stadium_tracker.forms import GameDetailsForm
 
 PAGINATION_DEFAULT = 5
@@ -173,3 +174,38 @@ class GameDetailDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         obj = self.get_object()
         return obj.user == self.request.user
+
+
+class MyVenues(ListView):
+    model = GameDetails
+    context_object_name = 'venues'
+    template_name = 'stadium_tracker/my_venue_list.html'
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        user = self.request.user
+        division_teams = []
+        data['divisions'] = get_division_details(1)
+        venues_count = GameDetails.get_venue_count(self)
+        for d in data['divisions']:
+            venues = get_venue_list(1, d.get('division_id'))
+            if self.request.user.is_authenticated:
+                for v in venues:
+                    venue_id = v.get('venue_id')
+                    user_visited_venue = GameDetails.objects.filter(user=user).filter(venue_id=venue_id)
+                    if user_visited_venue:
+                        if venue_id == user_visited_venue[0].venue_id:
+                            v.update(user_visited=True)
+            division_teams.append(
+                {
+                    'division_id': d.get('division_id'),
+                    'venues': venues,
+                    'test': venues_count
+                }
+            )
+        data['teams'] = division_teams
+        data['pages'] = {
+                'header': 'My Visited Stadia'
+            }
+        return data
+
