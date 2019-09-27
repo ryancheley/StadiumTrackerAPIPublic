@@ -1,4 +1,6 @@
 import requests
+from django.db.models import Count
+from stadium_tracker.models import GameDetails
 
 
 def get_venue_details(venue_id):
@@ -22,6 +24,12 @@ def get_venue_list(sportId, division_id):
         team_name = t.get('name')
         venue_name = t.get('venue').get('name')
         venue_id = t.get('venue').get('id')
+        visit_count = list(GameDetails.objects.all().values('venue_id').annotate(total=Count('venue_id'))\
+            .filter(venue_id=venue_id).values('total'))
+        if len(visit_count) >0:
+            visit_count = visit_count[0].get('total')
+        else:
+            visit_count = 0
         league_id = t.get('league').get('id')
         division_id = t.get('division').get('id')
         data = {
@@ -31,7 +39,7 @@ def get_venue_list(sportId, division_id):
             'league_id': league_id,
             'division_id': division_id,
             'user_visited': None,
-            'visit_count': -9,
+            'visit_count': visit_count,
         }
         if d == division_id:
             venues.append(data)

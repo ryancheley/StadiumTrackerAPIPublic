@@ -3,7 +3,7 @@ from django.db.models import Count
 from django.contrib.auth.models import User
 from StadiumTrackerAPI import settings
 from datetime import datetime
-from stadium_tracker.venue_details import get_venue_details
+# from stadium_tracker.venue_details import get_venue_details
 import requests
 
 
@@ -58,7 +58,6 @@ class GameDetails(models.Model):
         for d in details:
             game_venue.append({
                 'venue_id': d.get('venue_id'),
-                'name': get_venue_details(d.get('venue_id')),
                 'total': d.get('total')
             })
         return game_venue
