@@ -9,11 +9,11 @@ class CustomUserCreationForm(RegistrationForm):
 
     class Meta(RegistrationForm.Meta):
         model = CustomUser
-        fields = ('username', 'email')
+        fields = ('username', 'email', 'twitter_user', 'instagram_user')
 
 
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'email')
+        fields = ('username', 'email', 'twitter_user', 'instagram_user')
