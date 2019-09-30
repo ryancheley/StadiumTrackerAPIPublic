@@ -5,4 +5,5 @@ from django.db import models
 class CustomUser(AbstractUser):
     twitter_user = models.CharField(max_length=15, blank=True, null=True)
     instagram_user = models.CharField(max_length=30, blank=True, null=True)
+    favorite_team = models.IntegerField(blank=True, null=True)
 
