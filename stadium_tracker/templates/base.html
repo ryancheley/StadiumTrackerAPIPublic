@@ -37,7 +37,17 @@
                         </button>
                 </li>
                   {% if not request.user.is_authenticated %}
-                <li><a href="{% url 'login' %}">Login</a></li>
+                <li>
+                    <button class="mui-btn mui-btn--primary">
+                        <a href="{% url 'login' %}">Login</a>
+                    </button>
+                </li>
+                <li>
+                    <button class="mui-btn mui-btn--primary">
+                        <a href="{% url 'django_registration_register' %}">Register</a>
+                    </button>
+                </li>
+
                   {% endif %}
               {% if request.user.is_authenticated %}
               <div class="mui-dropdown">
@@ -83,9 +93,23 @@
     </div><!-- end content-wrapper -->
 
     <footer>
-      <div class="mui-container mui--text-center">
-        Made with ♥ by <a href="https://www.muicss.com">MUICSS</a>
-      </div>
+        <div class="mui-container-fluid">
+          <div class="mui-row">
+              <div class="mui-col-md-1"></div>
+            <div class="mui-col-md-3">
+                &copy; 2019 <a href="https://www.ryancheley.com" target="_blank">Ryan Cheley</a>
+            </div>
+            <div class="mui-col-md-4">
+            Made with ♥ by <a href="https://www.muicss.com">MUICSS</a>
+            </div>
+            <div class="mui-col-md-3">
+            {% if request.user == 'ryan' %}
+            <a href="https://github.com/ryancheley/StadiumTrackerAPI">GitHub</a>
+            {% endif %}
+            </div>
+            <div class="mui-col-md-1"></div>
+            </div>
+        </div>
     </footer>
 
   </body>
