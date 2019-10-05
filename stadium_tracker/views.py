@@ -185,7 +185,7 @@ class MyVenues(ListView):
         data = super().get_context_data(**kwargs)
         user = self.request.user
         division_teams = []
-        data['divisions'] = get_division_details(1)
+        data['divisions'] = get_division_details(1, 10)
         venues_count = GameDetails.get_venue_count(self)
         for d in data['divisions']:
             venues = get_venue_list(1, d.get('division_id'))
