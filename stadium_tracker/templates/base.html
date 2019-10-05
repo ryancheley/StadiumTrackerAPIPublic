@@ -58,6 +58,9 @@
                   <ul class="mui-dropdown__menu">
                       <li><a href="{% url 'stadium_tracker:my_venues' %}">Visited Stadia</a></li>
                       <li><a href="{% url 'stadium_tracker:my_game_list' %}">My Games</a></li>
+                      <li>
+                          <a href="{% url 'users:user' request.user.id %}">My User Details</a>
+                      </li>
                       <li><a href="{% url 'logout' %}">Logout</a></li>
                   </ul>
               </div>

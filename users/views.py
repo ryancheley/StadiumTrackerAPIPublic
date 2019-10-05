@@ -7,7 +7,7 @@ from django.urls import reverse
 
 # Create your views here.
 
-class UserUpdateView(LoginRequiredMixin, UpdateView):
+class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = CustomUser
     # fields = ['email', 'username', 'twitter_user', 'instagram_user', 'favorite_team']
     form_class = CustomUserChangeForm
@@ -17,3 +17,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         return reverse('users:user', kwargs={
             'pk': self.object.pk,
         })
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.id == self.request.user.id
