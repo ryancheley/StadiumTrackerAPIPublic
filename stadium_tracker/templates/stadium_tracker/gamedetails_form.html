@@ -12,27 +12,39 @@
         {{ error | safe }}
     </strong>
     </p>
-    <form method="get">
+    {% if not games %}
+    <form method="get" class="mui-form">
+    <legend>Choose Teams and a Date</legend>
+        <div class="mui-select">
         <select name="team1">
             {% for t in teams %}
-                <option value="{{ t.id }}">{{ t.name }}</option>
+                {% if t.id == default_values.away_team %}
+                    <option value="{{ t.id }}" selected>{{ t.name }}</option>
+                {% else %}
+                    <option value="{{ t.id }}">{{ t.name }}</option>
+                {% endif %}
             {% endfor %}
         </select>
-        <br/>
+        </div>
+        <div class="mui-select">
         <select name="team2">
             {% for t in teams %}
-                <option value="{{ t.id }}">{{ t.name }}</option>
+                {% if t.id == default_values.home_team %}
+                    <option value="{{ t.id }}" selected>{{ t.name }}</option>
+                {% else %}
+                    <option value="{{ t.id }}">{{ t.name }}</option>
+                {% endif %}
             {% endfor %}
         </select>
-        <br/>
-        <input type="date" class="mui-textfield" name="start_date" size="25" placeholder="yyyy-mm-dd">
-        <br/>
-        <input type="date" class="mui-textfield" name="end_date" size="25" placeholder="yyyy-mm-dd">
+        </div>
+        <div class="mui-textfield">
+        <input type="date" class="mui-textfield" name="start_date" size="25" placeholder="yyyy-mm-dd" value="{{ default_values.game_date }}">
+        <label>Select Game Date</label>
+        </div>
         <br/>
         <input type="submit" value="search" class="mui-btn mui-btn--primary">
     </form>
-
-    {%  if games %}
+    {% else %}
     <ul>
     {% for g in games %}
     <form method="post">

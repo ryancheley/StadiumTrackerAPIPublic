@@ -102,6 +102,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
         form = GameDetailsForm()
         teams = get_teams()
         display_dates = get_form_details(request)
+        default_values = get_default_game(1)
         if len(request.GET)>0:
             game_id = display_dates[0].get('gamePk')
             headline = get_game_recap(game_id, 'headline')
@@ -131,7 +132,8 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
             'test': request.GET,
             'pages': {
                 'header': 'Add a Game'
-            }
+            },
+            'default_values': default_values
 
         }
         return render(request, 'stadium_tracker/gamedetails_form.html', context)

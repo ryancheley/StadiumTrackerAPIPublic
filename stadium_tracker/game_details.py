@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil import tz
 import requests
 
@@ -24,7 +24,8 @@ def get_game_date(game_id):
 
 def get_game_recap(game_id, type):
     story = get_game_story(game_id)
-    if story.status_code==200:
+    data = None
+    if story.status_code == 200:
         recap = story.json().get('editorial').get('recap').get('mlb')
         if recap is not None:
             data = recap.get(f'{type}')
@@ -101,7 +102,10 @@ def get_form_details(request):
     team2 = request.GET.get('team2')
     teamId = f'{team1},{team2}'
     start_date = request.GET.get('start_date')
-    end_date = request.GET.get('end_date')
+    # Commented line below as the search is only adding the first entry and not all entries returned
+    # TODO: fix so that date range can be searched
+    # end_date = request.GET.get('end_date')
+    end_date = start_date
     params = {
         'sportId': sportId,
         'teamId': teamId,
@@ -134,3 +138,25 @@ def get_form_details(request):
                         str(home_id) == team2 and str(away_id) == team1):
                     display_dates.append(data)
     return display_dates
+
+
+def get_default_game(sportId):
+    url = 'http://statsapi.mlb.com/api/v1/schedule/games'
+    game_date = datetime.strftime(datetime.now() - timedelta(1), '%Y-%m-%d')
+    params = {
+        'sportId': sportId,
+        'startDate': game_date,
+        'endDate': game_date,
+    }
+    r = requests.get(url, params)
+    game_date = r.json().get('dates')[0].get('date')
+    home_team = r.json().get('dates')[0].get('games')[0].get('teams').get('home').get('team').get('id')
+    away_team = r.json().get('dates')[0].get('games')[0].get('teams').get('away').get('team').get('id')
+
+    data = {
+        'game_date': game_date,
+        'home_team': home_team,
+        'away_team': away_team,
+    }
+
+    return data
