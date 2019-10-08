@@ -25,7 +25,7 @@ def get_game_date(game_id):
 def get_game_recap(game_id, type):
     story = get_game_story(game_id)
     data = None
-    if story.status_code == 200:
+    if story.status_code == 200 and story.json().get('editorial') is not None:
         recap = story.json().get('editorial').get('recap').get('mlb')
         if recap is not None:
             data = recap.get(f'{type}')
@@ -48,7 +48,12 @@ def get_boxscore(game_id, type):
             'team': teams.get(f'{type}').get('team').get('name'),
         }
     else:
-        team = None
+        team = {
+            'hits': None,
+            'runs': get_score(1, game_id, type),
+            'errors': None,
+            'team': get_game_object(game_id).json().get('dates')[0].get('games')[0].get('teams').get(f'{type}').get('team').get('name'),
+        }
     return team
 
 def get_score(sportId, gamePk, type):
