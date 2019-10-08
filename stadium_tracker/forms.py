@@ -34,18 +34,18 @@ class GameDetailsForm(ModelForm):
             'game_id',
             'venue_id'
         ]
-        # widgets = {
-        #     'home_team': forms.HiddenInput(),
-        #     'home_runs': forms.HiddenInput(),
-        #     'home_hits': forms.HiddenInput(),
-        #     'home_errors': forms.HiddenInput(),
-        #     'away_team': forms.HiddenInput(),
-        #     'away_runs': forms.HiddenInput(),
-        #     'away_hits': forms.HiddenInput(),
-        #     'away_errors': forms.HiddenInput(),
-        #     'game_datetime': forms.HiddenInput(),
-        #     'game_headline': forms.HiddenInput(),
-        #     'game_body': forms.HiddenInput(),
-        #     'game_id': forms.HiddenInput(),
-        #     'venue_id': forms.HiddenInput(),
-        # }
+        widgets = {
+            'home_team': forms.HiddenInput(),
+            'home_runs': forms.HiddenInput(),
+            'home_hits': forms.HiddenInput(),
+            'home_errors': forms.HiddenInput(),
+            'away_team': forms.HiddenInput(),
+            'away_runs': forms.HiddenInput(),
+            'away_hits': forms.HiddenInput(),
+            'away_errors': forms.HiddenInput(),
+            'game_datetime': forms.HiddenInput(),
+            'game_headline': forms.HiddenInput(),
+            'game_body': forms.HiddenInput(),
+            'game_id': forms.HiddenInput(),
+            'venue_id': forms.HiddenInput(),
+        }
