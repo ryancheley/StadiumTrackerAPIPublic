@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-
+{% load tz %}
+{% get_current_timezone as TIME_ZONE %}
 {% block content %}
 
     <h1>
@@ -24,7 +25,7 @@
     {% for g in game_list %}
     <tr>
         <td>
-            {{g.game_datetime}}
+            {{g.game_datetime | timezone:"America/Los_Angeles"}}
             <br>
             {{g.away_team}} vs {{g.home_team}}
             <br>
