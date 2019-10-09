@@ -10,36 +10,61 @@
         {% endblock %}
     </h1>
 
-  <div class="mui-panel">
+    <div class="mui-panel">
     <div class="mui-container">
     <h2>{{ details.game_datetime | timezone:"America/Los_Angeles"}}</h2>
-      <table>
+    </div>
+    <table class="mui-table">
+
+    {% if details.away_hits is None %}
+
+        <tr>
+        <th>Team</th>
+        <th class="mui--text-center">Final Score</th>
+        </tr>
+        <tr>
+            <td>{{ details.away_team }}</td>
+            <td class="mui--text-center">{{ details.away_runs }}</td>
+        </tr>
+        <tr>
+            <td>{{ details.home_team }}</td>
+            <td class="mui--text-center">{{ details.home_runs }}</td>
+        </tr>
+    </table>
+    </div>
+    {% else %}
+
           <tr>
               <th>Team</th>
-              <th>Runs</th>
-              <th>Hits</th>
-              <th>Errors</th>
+              <th class="mui--text-center">Runs</th>
+              <th class="mui--text-center">Hits</th>
+              <th class="mui--text-center">Errors</th>
           </tr>
           <tr>
               <td>{{ details.away_team }}</td>
-              <td>{{ details.away_runs }}</td>
-              <td>{{ details.away_hits }}</td>
-              <td>{{ details.away_errors }}</td>
+              <td class="mui--text-center">{{ details.away_runs }}</td>
+              <td class="mui--text-center">{{ details.away_hits }}</td>
+              <td class="mui--text-center">{{ details.away_errors }}</td>
           </tr>
           <tr>
               <td>{{ details.home_team }}</td>
-              <td>{{ details.home_runs }}</td>
-              <td>{{ details.home_hits }}</td>
-              <td>{{ details.home_errors }}</td>
+              <td class="mui--text-center">{{ details.home_runs }}</td>
+              <td class="mui--text-center">{{ details.home_hits }}</td>
+              <td class="mui--text-center">{{ details.home_errors }}</td>
           </tr>
       </table>
       {% if details.game_headline %}
+          <div class="mui-divider"></div>
+          <div class="mui--container">
             <h3>  {{ details.game_headline }} </h3>
 
         <p>{{ details.game_body | safe }}</p>
+          </div>
         {% endif %}
     </div>
   </div>
+        {% endif %}
+
 
   <div class="mui-container">
     {% if request.user.is_authenticated %}
