@@ -147,16 +147,21 @@ def get_form_details(request):
 
 def get_default_game(sportId):
     url = 'http://statsapi.mlb.com/api/v1/schedule/games'
-    game_date = datetime.strftime(datetime.now() - timedelta(1), '%Y-%m-%d')
+    game_date = '2019-12-01'
+        # datetime.strftime(datetime.now() - timedelta(1), '%Y-%m-%d')
     params = {
         'sportId': sportId,
         'startDate': game_date,
         'endDate': game_date,
     }
     r = requests.get(url, params)
-    game_date = r.json().get('dates')[0].get('date')
-    home_team = r.json().get('dates')[0].get('games')[0].get('teams').get('home').get('team').get('id')
-    away_team = r.json().get('dates')[0].get('games')[0].get('teams').get('away').get('team').get('id')
+    if r.json().get('totalItems') >0:
+        game_date = r.json().get('dates')[0].get('date')
+        home_team = r.json().get('dates')[0].get('games')[0].get('teams').get('home').get('team').get('id')
+        away_team = r.json().get('dates')[0].get('games')[0].get('teams').get('away').get('team').get('id')
+    else:
+        home_team = 0,
+        away_team = 0
 
     data = {
         'game_date': game_date,

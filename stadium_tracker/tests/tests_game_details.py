@@ -22,8 +22,8 @@ class GameDetails(TestCase):
         self.assertIsNotNone(x)
         self.assertEqual(len(x), 3881)
 
-    def test_get_boxscore_home_is_None(self):
-        x = get_boxscore(8060, 'home')
-
-    def test_get_boxscore_home_is_not_None(self):
-        pass
+    def test_get_default_game(self):
+        x = get_default_game(1)
+        self.assertIsNotNone(x.get('game_date'))
+        self.assertIsNotNone(x.get('home_team'))
+        self.assertIsNotNone(x.get('away_team'))
