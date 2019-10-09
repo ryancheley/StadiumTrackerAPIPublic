@@ -1,5 +1,4 @@
 from django.test import TestCase, override_settings
-from django.urls import reverse
 from content.models import Content
 from users.models import CustomUser
 

@@ -16,12 +16,6 @@ class ContentTestCase(TestCase):
             author=CustomUser.objects.get(username='ryan'),
         )
 
-    def test_home_page_created(self):
-        home = Content.objects.get(title='Home Page')
-        self.assertEqual(home.page_content, '<h2>Home Page</h2><p>This is the home page!</p>',)
-        self.assertEqual(home.title, 'Home Page')
-        self.assertEqual(home.author, CustomUser.objects.get(username='ryan'))
-
     def test_string_representation(self):
         page = Content.objects.get(title='Home Page')
         self.assertEqual(str(page), 'Home Page')
