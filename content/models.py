@@ -1,6 +1,8 @@
 from django.db import models
 from StadiumTrackerAPI import settings
 
+# Be sure to add a test to tests_models BEFORE adding new attributes to these models
+
 
 class Content(models.Model):
     title = models.TextField()
