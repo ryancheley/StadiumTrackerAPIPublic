@@ -48,6 +48,9 @@ class GameDetails(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     modify_date = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f'{self.home_team} vs {self.away_team} ({self.game_datetime.strftime("%m/%d/%Y")})'
+
     def save(self, *args, **kwargs):
         self.modify_date = datetime.now()
         super(GameDetails, self).save(*args, **kwargs)
@@ -62,12 +65,9 @@ class GameDetails(models.Model):
             })
         return game_venue
 
-    def get_user_stadium_visited(self):
-        visited = GameDetails.objects.filter(venue_id=self.venue_id).filter(user=self.user)
-        return visited
-
     class Meta:
         unique_together = ['user','game_id']
+
 
 class GamesSeen(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
