@@ -11,6 +11,11 @@ def get_venue_details(venue_id):
         venue_name = response.json().get('venues')[0].get('name')
     return venue_name
 
+def get_venue_total(venue_id):
+    venue_total = list(GameDetails.objects.all().values('venue_id').annotate(total=Count('venue_id'))\
+            .filter(venue_id=venue_id).values('total'))
+    return venue_total
+
 def get_venue_list(sportId, division_id):
     d = division_id
     url = 'http://statsapi.mlb.com/api/v1/teams'
@@ -24,8 +29,7 @@ def get_venue_list(sportId, division_id):
         team_name = t.get('name')
         venue_name = t.get('venue').get('name')
         venue_id = t.get('venue').get('id')
-        visit_count = list(GameDetails.objects.all().values('venue_id').annotate(total=Count('venue_id'))\
-            .filter(venue_id=venue_id).values('total'))
+        visit_count = get_venue_total(venue_id)
         if len(visit_count) >0:
             visit_count = visit_count[0].get('total')
         else:
