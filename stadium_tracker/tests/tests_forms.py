@@ -1,7 +1,7 @@
 from django.test import TestCase
 from stadium_tracker.forms import GameDetailsForm
-from stadium_tracker.models import GameDetails
-from users.models import CustomUser
+from datetime import datetime
+import pytz
 
 
 class GameDetailsFormTest(TestCase):
@@ -16,7 +16,7 @@ class GameDetailsFormTest(TestCase):
             'away_runs': 0,
             'away_hits': 0,
             'away_errors': 0,
-            'game_datetime': '2019-07-04',
+            'game_datetime': datetime(year=2017, month=7, day=4, tzinfo=pytz.UTC),
             'game_headline': 'headline',
             'game_body': 'body',
             'game_id': 1,
