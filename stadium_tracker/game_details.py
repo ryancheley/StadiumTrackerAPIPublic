@@ -147,8 +147,7 @@ def get_form_details(request):
 
 def get_default_game(sportId):
     url = 'http://statsapi.mlb.com/api/v1/schedule/games'
-    game_date = '2019-12-01'
-        # datetime.strftime(datetime.now() - timedelta(1), '%Y-%m-%d')
+    game_date = datetime.strftime(datetime.now() - timedelta(1), '%Y-%m-%d')
     params = {
         'sportId': sportId,
         'startDate': game_date,
