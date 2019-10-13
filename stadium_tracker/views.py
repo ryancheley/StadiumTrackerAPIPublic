@@ -54,9 +54,8 @@ class StadiumGamesViewList(ListView):
     template_name = 'stadium_tracker/game_list.html'
     paginate_by = PAGINATION_DEFAULT
 
-
     def get_queryset(self):
-        queryset = GameDetails.objects.filter(venue_id=self.kwargs['venue_id'])
+        queryset = GameDetails.objects.filter(venue_id=self.kwargs['venue_id']).order_by('-game_datetime')
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -178,7 +177,7 @@ class GameDetailDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return obj.user == self.request.user
 
 
-class MyVenues(ListView):
+class MyVenues(LoginRequiredMixin, ListView):
     model = GameDetails
     context_object_name = 'venues'
     template_name = 'stadium_tracker/my_venue_list.html'
