@@ -105,7 +105,8 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = [
     '--with-coverage',
     '--cover-package=api,content,stadium_tracker,StadiumTrackerAPI,users',
-    '--cover-html'
+    '--cover-html',
+    '--ignore-files=StadiumTrackerAPI\/settings.py'
 ]
 
 # Database

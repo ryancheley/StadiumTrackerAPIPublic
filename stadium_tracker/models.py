@@ -7,29 +7,6 @@ from datetime import datetime
 import requests
 
 
-class Venues(models.Model):
-    venue_id = models.IntegerField()
-    venue_name = models.CharField(max_length=254)
-    home_team_id = models.IntegerField()
-    division_id = models.IntegerField()
-    street_address_1 = models.CharField(max_length=254, null=True, blank=True)
-    street_address_2 = models.CharField(max_length=254, null=True, blank=True)
-    city = models.CharField(max_length=100, null=True, blank=True)
-    state = models.CharField(max_length=2, null=True, blank=True)
-    zip = models.CharField(max_length=9, null=True, blank=True)
-    latitude = models.DecimalField(max_digits=8, decimal_places=5, null=True, blank=True)
-    longitude = models.DecimalField(max_digits=8, decimal_places=5, null=True, blank=True)
-
-    def __str__(self):
-        return f'{self.venue_name}'
-
-    def get_division_name(self):
-        url = f'http://statsapi.mlb.com/api/v1/divisions/{self.division_id}'
-        r = requests.get(url)
-        division_name = r.json().get('divisions')[0].get('name')
-        return division_name
-
-
 class GameDetails(models.Model):
     home_team = models.CharField(max_length=100)
     home_runs = models.IntegerField()
@@ -66,22 +43,4 @@ class GameDetails(models.Model):
         return game_venue
 
     class Meta:
-        unique_together = ['user','game_id']
-
-
-class GamesSeen(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    game_id = models.IntegerField()
-    venue_id = models.IntegerField()
-    create_date = models.DateTimeField(auto_now_add=True)
-    modify_date = models.DateTimeField(auto_now_add=True)
-    delete_ind = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f'{self.game_id}'
-
-    def save(self, *args, **kwargs):
-        self.modify_date = datetime.now()
-        super(GamesSeen, self).save(*args, **kwargs)
-
-
+        unique_together = ['user', 'game_id']

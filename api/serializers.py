@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from stadium_tracker.models import GamesSeen, GameDetails
+from stadium_tracker.models import GameDetails
 from users.models import CustomUser
 
 
@@ -24,13 +24,6 @@ class GameDetailsSerializer(serializers.ModelSerializer):
             'venue_id',
             'user_id',
         )
-
-
-class GamesSeenSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = GamesSeen
-        fields = ('user', 'game_id',)
 
 
 class UsersSerializer(serializers.ModelSerializer):

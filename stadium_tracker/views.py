@@ -8,7 +8,7 @@ from stadium_tracker.game_details import *
 from stadium_tracker.venue_details import *
 from stadium_tracker.league_details import *
 
-from stadium_tracker.models import GameDetails, Venues
+from stadium_tracker.models import GameDetails
 from stadium_tracker.forms import GameDetailsForm
 
 PAGINATION_DEFAULT = 5
