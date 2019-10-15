@@ -31,3 +31,8 @@ class ContentTemplateViewTests(TestCase):
         response = self.client.get(f'/{page}')
         self.assertEqual(response.status_code, 404)
 
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
+    def test_home_page_name(self):
+        page = create_content('Stadia Tracker', 'Home Page Content')
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)

@@ -3,8 +3,6 @@ from django.db.models import Count
 from django.contrib.auth.models import User
 from StadiumTrackerAPI import settings
 from datetime import datetime
-# from stadium_tracker.venue_details import get_venue_details
-import requests
 
 
 class GameDetails(models.Model):
@@ -43,4 +41,4 @@ class GameDetails(models.Model):
         return game_venue
 
     class Meta:
-        unique_together = ['user', 'game_id']
+        unique_together = ['user', 'game_id',]
