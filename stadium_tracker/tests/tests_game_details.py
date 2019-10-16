@@ -1,3 +1,4 @@
+from dateutil.tz import tzlocal
 from django.test import TestCase
 from stadium_tracker.game_details import *
 
@@ -27,3 +28,44 @@ class GameDetails(TestCase):
         self.assertIsNotNone(x.get('game_date'))
         self.assertIsNotNone(x.get('home_team'))
         self.assertIsNotNone(x.get('away_team'))
+
+    def test_get_game_object(self):
+        x = get_game_object(566063)
+        self.assertEqual(x.status_code, 200)
+
+    def test_get_game_date(self):
+        x = get_game_date(566063)
+        self.assertEqual(x, datetime(2019, 9, 15, 23, 5, tzinfo=tzlocal()))
+
+    def test_get_venue_id(self):
+        v = get_venue_id(566063)
+        self.assertEqual(v, 3289)
+
+    def test_get_boxscore_home_full(self):
+        x = get_boxscore(566063, 'home')
+        self.assertEqual(x.get('hits'), 3)
+        self.assertEqual(x.get('runs'), 2)
+        self.assertEqual(x.get('errors'), 0)
+        self.assertEqual(x.get('team'), 'New York Mets')
+
+    def test_get_boxscore_away_full(self):
+        x = get_boxscore(566063, 'away')
+        self.assertEqual(x.get('hits'), 9)
+        self.assertEqual(x.get('runs'), 3)
+        self.assertEqual(x.get('errors'), 0)
+        self.assertEqual(x.get('team'), 'Los Angeles Dodgers')
+
+    def test_get_boxscore_home_not_full(self):
+        x = get_boxscore(8060, 'home')
+        self.assertEqual(x.get('hits'), None)
+        self.assertEqual(x.get('runs'), 2)
+        self.assertEqual(x.get('errors'), None)
+        self.assertEqual(x.get('team'), 'San Francisco Giants')
+
+    def test_get_boxscore_away_not_full(self):
+        x = get_boxscore(8060, 'away')
+        self.assertEqual(x.get('hits'), None)
+        self.assertEqual(x.get('runs'), 1)
+        self.assertEqual(x.get('errors'), None)
+        self.assertEqual(x.get('team'), 'Colorado Rockies')
+
