@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import Count
 from django.contrib.auth.models import User
 from StadiumTrackerAPI import settings
-from datetime import datetime
+from django.utils import timezone
 
 
 class GameDetails(models.Model):
@@ -27,7 +27,7 @@ class GameDetails(models.Model):
         return f'{self.home_team} vs {self.away_team} ({self.game_datetime.strftime("%m/%d/%Y")})'
 
     def save(self, *args, **kwargs):
-        self.modify_date = datetime.now()
+        self.modify_date = timezone.now()
         super(GameDetails, self).save(*args, **kwargs)
 
     def get_venue_count(self):
@@ -42,3 +42,4 @@ class GameDetails(models.Model):
 
     class Meta:
         unique_together = ['user', 'game_id',]
+        ordering=['user', '-game_datetime']

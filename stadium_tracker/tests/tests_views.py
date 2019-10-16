@@ -1,5 +1,7 @@
 from django.test import TestCase, Client, override_settings
 from django.urls import reverse
+from django.utils import timezone
+
 from users.models import CustomUser
 
 from stadium_tracker.views import *
@@ -32,6 +34,8 @@ class TestStadiumGamesViewList(TestCase):
             game_body='body',
             game_id=1,
             venue_id=1,
+            create_date=timezone.now(),
+            modify_date=timezone.now(),
             user_id=self.test_user.id
         )
         self.test_game.save()
