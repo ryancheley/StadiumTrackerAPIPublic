@@ -94,6 +94,14 @@ def get_teams() -> list:
     return team_display
 
 
+def get_team(teamId):
+    url = f'http://statsapi.mlb.com/api/v1/teams?sportId=1&teamId={teamId}'
+    r = requests.get(url)
+    team = r.json().get('teams')[0].get('name')
+    return team
+
+
+
 def get_form_details(request):
     """
 
@@ -167,5 +175,30 @@ def get_default_game(sportId):
         'home_team': home_team,
         'away_team': away_team,
     }
+
+    return data
+
+
+def get_games_for_date(sportId, game_date):
+    url = 'http://statsapi.mlb.com/api/v1/schedule/games'
+    params = {
+        'sportId': sportId,
+        'startDate': game_date,
+        'endDate': game_date,
+    }
+    game = []
+    r = requests.get(url, params)
+    if r.json().get('totalItems') > 0:
+        for g in range(r.json().get('totalItems')):
+            game_time = datetime.strptime(r.json().get('dates')[0].get('games')[g].get('gameDate'),'%Y-%m-%dT%H:%M:%SZ').time()
+            game.append({
+                'game_time':  game_time,
+                'home_team':  get_team(r.json().get('dates')[0].get('games')[g].get('teams').get('home').get('team').get('id')),
+                'away_team':  get_team(r.json().get('dates')[0].get('games')[g].get('teams').get('away').get('team').get('id'))
+            })
+        data = game[:3]
+    else:
+        game = None
+        data = game
 
     return data

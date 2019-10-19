@@ -15,14 +15,25 @@
             </div>
 
             <div class="mui-col-md-4">
-                <h2>Most Recently Added Games</h2>
+                <h2>Recently Added Games</h2>
                 <ul class="mui-list">
                 {% for g in games %}
                     <li>
-                        <a href="{% url 'stadium_tracker:gamedetails_list' g.id %}"> <strong>{{ g.user | title}}</strong> saw {{ g.home_team }} vs {{ g.away_team }} on {{ g.game_datetime  | timezone:"America/Los_Angeles"}}</a>
+                        <a href="{% url 'stadium_tracker:gamedetails_list' g.id %}"> <strong>{{ g.user | title}}</strong> saw {{ g.home_team }} vs {{ g.away_team }} on {{ g.game_datetime | timezone:"America/Los_Angeles"}}</a>
                     </li>
                 {% endfor %}
                 </ul>
+                {% if today %}
+                <h2>Today's Games</h2>
+
+                <ul>
+                    {% for t in today %}
+                    <li>{{t.away_team}} vs {{t.home_team}} at {{t.game_time}}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+
+                {% endif %}
             </div>
 
         </div>

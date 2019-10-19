@@ -69,3 +69,12 @@ class GameDetails(TestCase):
         self.assertEqual(x.get('errors'), None)
         self.assertEqual(x.get('team'), 'Colorado Rockies')
 
+    def test_get_games_for_date_with_games(self):
+        x = get_games_for_date(1, '2019-10-19')
+        self.assertLessEqual(len(x), 3)
+        self.assertIsNotNone(x)
+
+    def test_get_games_for_date_with__nogames(self):
+        x = get_games_for_date(1, '2019-12-19')
+        self.assertIsNone(x)
+
