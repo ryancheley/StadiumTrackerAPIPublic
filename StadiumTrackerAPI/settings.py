@@ -103,11 +103,12 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # Tell nose to measure coverage on the 'foo' and 'bar' apps
 NOSE_ARGS = [
+    '--cover-erase',
     '--with-coverage',
-    '--cover-package=api,content,stadium_tracker,StadiumTrackerAPI,users',
+    '--cover-package=api,content,stadium_tracker,users',
     '--cover-html',
-    '--ignore-files=StadiumTrackerAPI\/settings.py'
 ]
+
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
