@@ -80,11 +80,11 @@ def get_score(sportId, gamePk, type):
     return score
 
 
-def get_teams() -> list:
+def get_teams(sportId) -> list:
     """
     :return: list of teams in alphabetical order
     """
-    url = 'http://statsapi.mlb.com/api/v1/teams?sportId=1'
+    url = f'http://statsapi.mlb.com/api/v1/teams?sportId={sportId}'
     r = requests.get(url)
     teams = r.json().get('teams')
     teams = sorted(teams, key = lambda team: (team['name']))

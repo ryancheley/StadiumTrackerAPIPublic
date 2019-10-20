@@ -13,6 +13,21 @@
     </strong>
     </p>
     {% if not games %}
+        <!--
+    <form method="get" class="mui-form" name="league">
+        <select name="league">
+        {% for l in leagues %}
+            {% if l.id == 1 %}
+            <option selected value="{{l.id}}">{{l.name}}</option>
+            {% else %}
+            <option value="{{l.id}}">{{l.name}}</option>
+            {% endif %}
+        {% endfor %}
+        </select>
+            <br>
+    <input type="submit" value="submit" class="mui-btn mui-btn--primary">
+    </form>
+    -->
     <form method="get" class="mui-form">
     <legend>Choose Teams and a Date</legend>
         <div class="mui-select">
