@@ -18,12 +18,18 @@
     <ul>
         <form method="post">
             {% csrf_token %}
-            {{form.as_p}}
+            <table>
+            {% for fields in form %}
+                <tr>
+                    <td>{{ fields.label }}</td><td>{{ fields }}</td>
+                </tr>
+            {% endfor %}
+            </table>
             <input type="submit" value="Update">
         </form>
     </ul>
         <p>The below link totally needs to be updated</p>
-        <p><a href="/accounts/password_change/">Change My Password</a></p>
+        <p><a href="{% url 'users:password_change' %}">Change My Password</a></p>
     </div>
 
 </div>
