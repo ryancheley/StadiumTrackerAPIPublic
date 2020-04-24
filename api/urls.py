@@ -9,6 +9,5 @@ urlpatterns = [
     path('games/', GameDetailsList.as_view()),
     path('games/<int:pk>', GameDetailsDetail.as_view()),
     path('api-auth/', include('rest_framework.urls')),
-    path('docs/', schema_view),
 
 ]
