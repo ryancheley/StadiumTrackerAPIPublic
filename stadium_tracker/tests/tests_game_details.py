@@ -57,16 +57,16 @@ class GameDetails(TestCase):
 
     def test_get_boxscore_home_not_full(self):
         x = get_boxscore(8060, 'home')
-        self.assertEqual(x.get('hits'), None)
+        self.assertEqual(x.get('hits'), 9)
         self.assertEqual(x.get('runs'), 2)
-        self.assertEqual(x.get('errors'), None)
+        self.assertEqual(x.get('errors'), 1)
         self.assertEqual(x.get('team'), 'San Francisco Giants')
 
     def test_get_boxscore_away_not_full(self):
         x = get_boxscore(8060, 'away')
-        self.assertEqual(x.get('hits'), None)
+        self.assertEqual(x.get('hits'), 5)
         self.assertEqual(x.get('runs'), 1)
-        self.assertEqual(x.get('errors'), None)
+        self.assertEqual(x.get('errors'), 1)
         self.assertEqual(x.get('team'), 'Colorado Rockies')
 
     def test_get_games_for_date_with_games(self):
